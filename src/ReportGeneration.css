@@ -1,0 +1,13 @@
+.report-container {
+  margin-top: 10px; /* Adjust this value to ensure the content does not overlap the navbar */
+  padding: 20px;
+}
+
+a {
+  color: blue;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}

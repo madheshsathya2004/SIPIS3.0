@@ -1,0 +1,14 @@
+.content {
+  padding: 20px;
+  font-size: 18px;
+  line-height: 1.6;
+  background-color: var(--white-color);
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-weight: 300;
+}
+
+p{
+  background-color: antiquewhite;
+  font-weight: bold;
+}

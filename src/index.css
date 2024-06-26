@@ -1,0 +1,46 @@
+:root {
+  --primary-color: #6c757d; /* Replacing blue with gray */
+  --secondary-color: #343a40; /* Darker shade for text */
+  --background-color: #f8f9fa; /* Light background */
+  --accent-color: #ffcc00; /* Accent color for highlights */
+  --text-color: #333;
+  --white-color: #ffffff;
+  --header-bg-color: #495057; /* New background color for the header section */
+}
+
+body {
+  margin: 0;
+  padding: 0; /* Remove any padding to ensure no gaps */
+  font-family: "Poppins", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 600;
+}
+
+p {
+  font-weight: 300;
+}
+
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}

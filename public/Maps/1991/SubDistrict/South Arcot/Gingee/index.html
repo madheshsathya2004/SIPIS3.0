@@ -1,0 +1,2037 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/L.Control.Layers.Tree.css">
+        <link rel="stylesheet" href="css/qgis2web.css">
+        <link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="css/leaflet-search.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        #controls {
+            position: absolute;
+            top: 10px;
+            left: 50px;
+            z-index: 1000;
+            background: white;
+            padding: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+            border-radius: 5px;
+        }
+        #controls div {
+            margin-bottom: 5px;
+        }
+        #controls input[type="text"], #controls select {
+            width: 70px;
+            padding: 5px;
+            margin-right: 5px;
+        }
+        #controls button {
+            padding: 5px 10px;
+            margin-top: 5px;
+        }
+  
+        #controls button:hover {
+          cursor: pointer;
+        }
+        #controls label {
+          margin-right: 5px;
+      }
+      /* Add this CSS to maintain feature borders */
+  .leaflet-pane svg .leaflet-interactive {
+    fill-opacity: 0.7;
+    stroke: #3388ff; /* Border color */
+    stroke-width: 1px;
+  }
+  
+  /* Modify the fill color when highlighted */
+  .leaflet-pane svg .leaflet-interactive.highlight {
+    fill: #ff0000; /* Highlighted fill color */
+  }
+
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+            <div id="controls">
+                <label for="addField">Add Field: </label>
+                <select id="addField" onchange="addField()">
+                    <option value="">Select Field</option>
+                    <option value="T_POPULAT�">Total Population</option>
+                    <option value="DENSITY">Density</option>
+                    <option value="HOUSEHOLDS">Households</option>
+                    <option value="PERS/HOUSE">Persons per Household</option>
+                    <option value="MALE_POP">Male Population</option>
+                    <option value="FEMALE_POP">Female Population</option>
+                    <option value="SR_POPULAT">Sex Ratio of Population</option>
+                    <option value="T_CHILDREN">Total Children</option>
+                    <option value="M_CHILDREN">Male Children</option>
+                    <option value="F_CHILDREN">Female Children</option>
+                    <option value="SR_CHILDRE">Sex Ratio of Children</option>
+                    <option value="T_SC">Total Scheduled Castes</option>
+                    <option value="T%_SC">% of Scheduled Castes</option>
+                    <option value="M_SC">Male Scheduled Castes</option>
+                    <option value="F_SC">Female Scheduled Castes</option>
+                    <option value="SR_SC">Sex Ratio of Scheduled Castes</option>
+                    <option value="T_ST">Total Scheduled Tribes</option>
+                    <option value="T%_ST">% of Scheduled Tribes</option>
+                    <option value="M_ST">Male Scheduled Tribes</option>
+                    <option value="F_ST">Female Scheduled Tribes</option>
+                    <option value="SR_ST">Sex Ratio of Scheduled Tribes</option>
+                    <option value="T_LITTERAT">Total Literates</option>
+                    <option value="T%_LITTERA">% of Literates</option>
+                    <option value="M_LITTERAT">Male Literates</option>
+                    <option value="F_LITTERAT">Female Literates</option>
+                    <option value="SR_LITTERA">Sex Ratio of Literates</option>
+                    <option value="T_WORKERS">Total Workers</option>
+                    <option value="T%_WORKERS">% of Workers</option>
+                    <option value="M_WORKERS">Male Workers</option>
+                    <option value="F_WORKERS">Female Workers</option>
+                    <option value="SR_WORKERS">Sex Ratio of Workers</option>
+                    <option value="T_MARGINAL">Total Marginal Workers</option>
+                    <option value="T%_MARGINA">% of Marginal Workers</option>
+                    <option value="M_MARGINAL">Male Marginal Workers</option>
+                    <option value="F_MARGINAL">Female Marginal Workers</option>
+                    <option value="SR_MARGINA">Sex Ratio of Marginal Workers</option>
+                    <option value="T_NONWORK">Total Non-Workers</option>
+                    <option value="T%_NONWORK">% of Non-Workers</option>
+                    <option value="M_NONWORK">Male Non-Workers</option>
+                    <option value="F_NONWORK">Female Non-Workers</option>
+                    <option value="SR_NONWORK">Sex Ratio of Non-Workers</option>
+                    <option value="T_PRIMARY">Total Primary Workers</option>
+                    <option value="T%_PRIMARY">% of Primary Workers</option>
+                    <option value="M_PRIMARY">Male Primary Workers</option>
+                    <option value="F_PRIMARY">Female Primary Workers</option>
+                    <option value="SR_PRIMARY">Sex Ratio of Primary Workers</option>
+                    <option value="T_SECUND">Total Secondary Workers</option>
+                    <option value="T%_SECUND">% of Secondary Workers</option>
+                    <option value="M_SECUND">Male Secondary Workers</option>
+                    <option value="F_SECUND">Female Secondary Workers</option>
+                    <option value="SR_SECUND">Sex Ratio of Secondary Workers</option>
+                    <option value="T_TERTIARY">Total Tertiary Workers</option>
+                    <option value="T%_TERTIAR">% of Tertiary Workers</option>
+                    <option value="M_TERTIARY">Male Tertiary Workers</option>
+                    <option value="F_TERTIARY">Female Tertiary Workers</option>
+                    <option value="SR_TERTIAR">Sex Ratio of Tertiary Workers</option>
+                    <option value="T_CULTIVAT">Total Cultivators</option>
+                    <option value="T%_CULTIVA">% of Cultivators</option>
+                    <option value="M_CULTIVAT">Male Cultivators</option>
+                    <option value="F_CULTIVAT">Female Cultivators</option>
+                    <option value="SR_CULTIVA">Sex Ratio of Cultivators</option>
+                    <option value="T_AGRI_LAB">Total Agricultural Laborers</option>
+                    <option value="T%_AGRI_LA">% of Agricultural Laborers</option>
+                    <option value="M_AGRI_LAB">Male Agricultural Laborers</option>
+                    <option value="F_AGRI_LAB">Female Agricultural Laborers</option>
+                    <option value="SR_AGRI_LA">Sex Ratio of Agricultural Laborers</option>
+                    <option value="T_FISH_FOR">Total Fishing and Forestry Workers</option>
+                    <option value="T%_FISH_FO">% of Fishing and Forestry Workers</option>
+                    <option value="M_FISH_FOR">Male Fishing and Forestry Workers</option>
+                    <option value="F_FISH_FOR">Female Fishing and Forestry Workers</option>
+                    <option value="SR_FISH_FO">Sex Ratio of Fishing and Forestry Workers</option>
+                    <option value="T_MINING">Total Mining Workers</option>
+                    <option value="T%_MINING">% of Mining Workers</option>
+                    <option value="M_MINING">Male Mining Workers</option>
+                    <option value="F_MINING">Female Mining Workers</option>
+                    <option value="SR_MINING">Sex Ratio of Mining Workers</option>
+                    <option value="T_HH_INDUS">Total Household Industry Workers</option>
+                    <option value="T%_HH_INDU">% of Household Industry Workers</option>
+                    <option value="M_HH_INDUS">Male Household Industry Workers</option>
+                    <option value="F_HH_INDUS">Female Household Industry Workers</option>
+                    <option value="SR_HH_INDU">Sex Ratio of Household Industry Workers</option>
+                    <option value="T_OTH_INDU">Total Other Industry Workers</option>
+                    <option value="T%_OTH_IND">% of Other Industry Workers</option>
+                    <option value="M_OTH_INDU">Male Other Industry Workers</option>
+                    <option value="F_OTH_INDU">Female Other Industry Workers</option>
+                    <option value="SR_OTH_IND">Sex Ratio of Other Industry Workers</option>
+                    <option value="T_CONSTRUC">Total Construction Workers</option>
+                    <option value="T%_CONSTRU">% of Construction Workers</option>
+                    <option value="M_CONSTRUC">Male Construction Workers</option>
+                    <option value="F_CONSTRUC">Female Construction Workers</option>
+                    <option value="SR_CONSTRU">Sex Ratio of Construction Workers</option>
+                    <option value="T_TRADE">Total Trade Workers</option>
+                    <option value="T%_TRADE">% of Trade Workers</option>
+                    <option value="M_TRADE">Male Trade Workers</option>
+                    <option value="F_TRADE">Female Trade Workers</option>
+                    <option value="SR_TRADE">Sex Ratio of Trade Workers</option>
+                    <option value="T_TRANSPOR">Total Transportation Workers</option>
+                    <option value="T%_TRANSPO">% of Transportation Workers</option>
+                    <option value="M_TRANSPOR">Male Transportation Workers</option>
+                    <option value="F_TRANSPOR">Female Transportation Workers</option>
+                    <option value="SR_TRANSPO">Sex Ratio of Transportation Workers</option>
+                    <option value="T_SERVICES">Total Service Workers</option>
+                    <option value="T%_SERVICE">% of Service Workers</option>
+                    <option value="M_SERVICES">Male Service Workers</option>
+                    <option value="F_SERVICES">Female Service Workers</option>
+                    <option value="SR_SERVICE">Sex Ratio of Service Workers</option>
+                  
+                    <option value="EI_DISTANC">Distance to Educational Institutions</option>
+                    <option value="P_SCHOOL">Primary School</option>
+                    <option value="M_SCHOOL">Middle School</option>
+                    <option value="H_SCHOOL">High School</option>
+                    <option value="PU_COLLEGE">PU College</option>
+                    <option value="GR_COLLEGE">Graduate College</option>
+                    <option value="ADULT_LIT_">Adult Literacy Classes</option>
+                    <option value="INDUS_SCH">Industrial School</option>
+                    <option value="TRAIN_SCH">Training School</option>
+                    <option value="OTHER_EI">Other Educational Institutions</option>
+                   
+                    <option value="MI_DISTANC">Distance to Medical Institutions</option>
+                    <option value="HOSPITAL">Hospital</option>
+                    <option value="MAT">Maternity Clinic</option>
+                    <option value="MATERNITY">Maternity Home</option>
+                    <option value="CHILD_W_C">Child Welfare Center</option>
+                    <option value="PRIM_H_C">Primary Health Center</option>
+                    <option value="HEQLTH_C">Health Center</option>
+                    <option value="PRIM_H_S_C">Primary Health Sub-Center</option>
+                    <option value="DISPENSARY">Dispensary</option>
+                    <option value="FP_C">Family Planning Center</option>
+                    <option value="TB_C">Tuberculosis Center</option>
+                    <option value="NURSING_H">Nursing Home</option>
+                    <option value="CHWC">Community Health Worker Center</option>
+                    <option value="PRIV_PRACT">Private Practitioner</option>
+                    <option value="SUBS_PRACT">Subsidized Practitioner</option>
+                    <option value="OTHER_MI">Other Medical Institutions</option>
+                  
+                    <option value="PR_DISTANC">Distance to Post and Telegraph</option>
+                    <option value="POST_OFFIC">Post Office</option>
+                    <option value="TELEG_OFFI">Telegraph Office</option>
+                    <option value="PT_OFFICE">Post and Telegraph Office</option>
+                    <option value="PHONE_CONN">Phone Connection</option>
+                  
+                    <option value="DW_DISTANC">Distance to Drinking Water</option>
+                    <option value="DW_TAP">Drinking Water from Tap</option>
+                    <option value="DW_WELL">Drinking Water from Well</option>
+                    <option value="DW_TUBEWEL">Drinking Water from Tube Well</option>
+                    <option value="DW_HANDPUM">Drinking Water from Hand Pump</option>
+                    <option value="DW_RIVER">Drinking Water from River</option>
+                    <option value="DW_FOUNTAI">Drinking Water from Fountain</option>
+                    <option value="DW_SPRING">Drinking Water from Spring</option>
+                    <option value="DW_CANAL">Drinking Water from Canal</option>
+                    <option value="DW_TANK">Drinking Water from Tank</option>
+                    <option value="DW_OTHER">Other Drinking Water Sources</option>
+                  
+                    <option value="MK_DISTANC">Distance to Market</option>
+                    <option value="DAILY_MK">Daily Market</option>
+                  
+                    <option value="CF_DISTANC">Distance to Communication Facilities</option>
+                    <option value="BUS_STOP">Bus Stop</option>
+                    <option value="RAILWAY">Railway Station</option>
+                    <option value="PUCCA_ROAD">Pucca Road</option>
+                    <option value="KACHCHA_RO">Kachcha Road</option>
+                    <option value="FOOTPATH">Footpath</option>
+                    <option value="DIST_TOWN">Distance to Nearest Town</option>
+       
+                    <option value="PW_DOMESTI">Public Works for Domestic Use</option>
+                    <option value="PW_AGRICUL">Public Works for Agriculture</option>
+                    <option value="PW_IND_COM">Public Works for Industrial/Commercial Use</option>
+                    <option value="PW_FOR_ALL">Public Works for All</option>
+                    <option value="LU_FOREST">Forest Land</option>
+                    <option value="LU%_FOREST">% of Forest Land</option>
+                    <option value="LU_IRRIGAT">Irrigated Land</option>
+                    <option value="LU%_IRRIGA">% of Irrigated Land</option>
+                    <option value="LU_UNIRRIG">Unirrigated Land</option>
+                    <option value="LU%_UNIRRI">% of Unirrigated Land</option>
+                    <option value="LU_CULT_WA">Culturable Waste Land</option>
+                    <option value="LU%_CULT_W">% of Culturable Waste Land</option>
+                    <option value="LU_NON_CUL">Non-Culturable Land</option>
+                    <option value="LU%_NON_C">% of Non-Culturable Land</option>
+                    <option value="IR_WELL">Irrigation from Wells</option>
+                    <option value="IR_TUBEWEL">Irrigation from Tube Wells</option>
+                    <option value="IR_TANK">Irrigation from Tanks</option>
+                    <option value="IR_LAKE">Irrigation from Lakes</option>
+                    <option value="IR_RIVER">Irrigation from Rivers</option>
+                    <option value="IR_GVT_CAN">Irrigation from Government Canals</option>
+                    <option value="IR_PRIV_CA">Irrigation from Private Canals</option>
+                    <option value="IR_OTHER">Other Irrigation Sources</option>
+                </select>
+                <div id="filters"></div>
+                <button onclick="applyFilter()">Apply Filter</button>
+                <button onclick="revertFeatures()">Revert</button>
+            </div>
+
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/L.Control.Layers.Tree.min.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/leaflet-search.js"></script>
+        <script src="data/601sdt_0.js"></script>
+        <script src="data/601v_1.js"></script>
+        <script>
+        var map = L.map('map', {
+            zoomControl:false, maxZoom:28, minZoom:1
+        }).fitBounds([[-1.7115361906200435,-0.32023943881840666],[-0.026633108642590386,2.983022369608162]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        // remove popup's row if "visible-with-data"
+        function removeEmptyRowsFromPopupContent(content, feature) {
+         var tempDiv = document.createElement('div');
+         tempDiv.innerHTML = content;
+         var rows = tempDiv.querySelectorAll('tr');
+         for (var i = 0; i < rows.length; i++) {
+             var td = rows[i].querySelector('td.visible-with-data');
+             var key = td ? td.id : '';
+             if (td && td.classList.contains('visible-with-data') && feature.properties[key] == null) {
+                 rows[i].parentNode.removeChild(rows[i]);
+             }
+         }
+         return tempDiv.innerHTML;
+        }
+        // add class to format popup if it contains media
+		function addClassToPopupIfMedia(content, popup) {
+			var tempDiv = document.createElement('div');
+			tempDiv.innerHTML = content;
+			if (tempDiv.querySelector('td img')) {
+				popup._contentNode.classList.add('media');
+					// Delay to force the redraw
+					setTimeout(function() {
+						popup.update();
+					}, 10);
+			} else {
+				popup._contentNode.classList.remove('media');
+			}
+		}
+        var zoomControl = L.control.zoom({
+            position: 'topleft'
+        }).addTo(map);
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        function pop_601sdt_0(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">CODE</th>\
+                        <td class="visible-with-data" id="CODE">' + (feature.properties['CODE'] !== null ? autolinker.link(feature.properties['CODE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">NAME</th>\
+                        <td class="visible-with-data" id="NAME">' + (feature.properties['NAME'] !== null ? autolinker.link(feature.properties['NAME'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">DISTRICT</th>\
+                        <td class="visible-with-data" id="DISTRICT">' + (feature.properties['DISTRICT'] !== null ? autolinker.link(feature.properties['DISTRICT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T_POPULAT�</th>\
+                        <td class="visible-with-data" id="T_POPULAT�">' + (feature.properties['T_POPULAT�'] !== null ? autolinker.link(feature.properties['T_POPULAT�'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">DENSITY</th>\
+                        <td class="visible-with-data" id="DENSITY">' + (feature.properties['DENSITY'] !== null ? autolinker.link(feature.properties['DENSITY'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">HOUSEHOLDS</th>\
+                        <td class="visible-with-data" id="HOUSEHOLDS">' + (feature.properties['HOUSEHOLDS'] !== null ? autolinker.link(feature.properties['HOUSEHOLDS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">PERS/HOUSE</th>\
+                        <td class="visible-with-data" id="PERS/HOUSE">' + (feature.properties['PERS/HOUSE'] !== null ? autolinker.link(feature.properties['PERS/HOUSE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">MALE_POP</th>\
+                        <td class="visible-with-data" id="MALE_POP">' + (feature.properties['MALE_POP'] !== null ? autolinker.link(feature.properties['MALE_POP'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">FEMALE_POP</th>\
+                        <td class="visible-with-data" id="FEMALE_POP">' + (feature.properties['FEMALE_POP'] !== null ? autolinker.link(feature.properties['FEMALE_POP'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SR_POPULAT</th>\
+                        <td class="visible-with-data" id="SR_POPULAT">' + (feature.properties['SR_POPULAT'] !== null ? autolinker.link(feature.properties['SR_POPULAT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T_CHILDREN</th>\
+                        <td class="visible-with-data" id="T_CHILDREN">' + (feature.properties['T_CHILDREN'] !== null ? autolinker.link(feature.properties['T_CHILDREN'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">M_CHILDREN</th>\
+                        <td class="visible-with-data" id="M_CHILDREN">' + (feature.properties['M_CHILDREN'] !== null ? autolinker.link(feature.properties['M_CHILDREN'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">F_CHILDREN</th>\
+                        <td class="visible-with-data" id="F_CHILDREN">' + (feature.properties['F_CHILDREN'] !== null ? autolinker.link(feature.properties['F_CHILDREN'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SR_CHILDRE</th>\
+                        <td class="visible-with-data" id="SR_CHILDRE">' + (feature.properties['SR_CHILDRE'] !== null ? autolinker.link(feature.properties['SR_CHILDRE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T_SC</th>\
+                        <td class="visible-with-data" id="T_SC">' + (feature.properties['T_SC'] !== null ? autolinker.link(feature.properties['T_SC'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T%_SC</th>\
+                        <td class="visible-with-data" id="T%_SC">' + (feature.properties['T%_SC'] !== null ? autolinker.link(feature.properties['T%_SC'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">M_SC</th>\
+                        <td class="visible-with-data" id="M_SC">' + (feature.properties['M_SC'] !== null ? autolinker.link(feature.properties['M_SC'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">F_SC</th>\
+                        <td class="visible-with-data" id="F_SC">' + (feature.properties['F_SC'] !== null ? autolinker.link(feature.properties['F_SC'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SR_SC</th>\
+                        <td class="visible-with-data" id="SR_SC">' + (feature.properties['SR_SC'] !== null ? autolinker.link(feature.properties['SR_SC'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T_ST</th>\
+                        <td class="visible-with-data" id="T_ST">' + (feature.properties['T_ST'] !== null ? autolinker.link(feature.properties['T_ST'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T%_ST</th>\
+                        <td class="visible-with-data" id="T%_ST">' + (feature.properties['T%_ST'] !== null ? autolinker.link(feature.properties['T%_ST'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">M_ST</th>\
+                        <td class="visible-with-data" id="M_ST">' + (feature.properties['M_ST'] !== null ? autolinker.link(feature.properties['M_ST'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">F_ST</th>\
+                        <td class="visible-with-data" id="F_ST">' + (feature.properties['F_ST'] !== null ? autolinker.link(feature.properties['F_ST'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SR_ST</th>\
+                        <td class="visible-with-data" id="SR_ST">' + (feature.properties['SR_ST'] !== null ? autolinker.link(feature.properties['SR_ST'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T_LITTERAT</th>\
+                        <td class="visible-with-data" id="T_LITTERAT">' + (feature.properties['T_LITTERAT'] !== null ? autolinker.link(feature.properties['T_LITTERAT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T%_LITTERA</th>\
+                        <td class="visible-with-data" id="T%_LITTERA">' + (feature.properties['T%_LITTERA'] !== null ? autolinker.link(feature.properties['T%_LITTERA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">M_LITTERAT</th>\
+                        <td class="visible-with-data" id="M_LITTERAT">' + (feature.properties['M_LITTERAT'] !== null ? autolinker.link(feature.properties['M_LITTERAT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">F_LITTERAT</th>\
+                        <td class="visible-with-data" id="F_LITTERAT">' + (feature.properties['F_LITTERAT'] !== null ? autolinker.link(feature.properties['F_LITTERAT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SR_LITTERA</th>\
+                        <td class="visible-with-data" id="SR_LITTERA">' + (feature.properties['SR_LITTERA'] !== null ? autolinker.link(feature.properties['SR_LITTERA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T_WORKERS</th>\
+                        <td class="visible-with-data" id="T_WORKERS">' + (feature.properties['T_WORKERS'] !== null ? autolinker.link(feature.properties['T_WORKERS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T%_WORKERS</th>\
+                        <td class="visible-with-data" id="T%_WORKERS">' + (feature.properties['T%_WORKERS'] !== null ? autolinker.link(feature.properties['T%_WORKERS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">M_WORKERS</th>\
+                        <td class="visible-with-data" id="M_WORKERS">' + (feature.properties['M_WORKERS'] !== null ? autolinker.link(feature.properties['M_WORKERS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">F_WORKERS</th>\
+                        <td class="visible-with-data" id="F_WORKERS">' + (feature.properties['F_WORKERS'] !== null ? autolinker.link(feature.properties['F_WORKERS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SR_WORKERS</th>\
+                        <td class="visible-with-data" id="SR_WORKERS">' + (feature.properties['SR_WORKERS'] !== null ? autolinker.link(feature.properties['SR_WORKERS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T_MARGINAL</th>\
+                        <td class="visible-with-data" id="T_MARGINAL">' + (feature.properties['T_MARGINAL'] !== null ? autolinker.link(feature.properties['T_MARGINAL'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T%_MARGINA</th>\
+                        <td class="visible-with-data" id="T%_MARGINA">' + (feature.properties['T%_MARGINA'] !== null ? autolinker.link(feature.properties['T%_MARGINA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">M_MARGINAL</th>\
+                        <td class="visible-with-data" id="M_MARGINAL">' + (feature.properties['M_MARGINAL'] !== null ? autolinker.link(feature.properties['M_MARGINAL'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">F_MARGINAL</th>\
+                        <td class="visible-with-data" id="F_MARGINAL">' + (feature.properties['F_MARGINAL'] !== null ? autolinker.link(feature.properties['F_MARGINAL'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SR_MARGINA</th>\
+                        <td class="visible-with-data" id="SR_MARGINA">' + (feature.properties['SR_MARGINA'] !== null ? autolinker.link(feature.properties['SR_MARGINA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T_NONWORK</th>\
+                        <td class="visible-with-data" id="T_NONWORK">' + (feature.properties['T_NONWORK'] !== null ? autolinker.link(feature.properties['T_NONWORK'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T%_NONWORK</th>\
+                        <td class="visible-with-data" id="T%_NONWORK">' + (feature.properties['T%_NONWORK'] !== null ? autolinker.link(feature.properties['T%_NONWORK'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">M_NONWORK</th>\
+                        <td class="visible-with-data" id="M_NONWORK">' + (feature.properties['M_NONWORK'] !== null ? autolinker.link(feature.properties['M_NONWORK'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">F_NONWORK</th>\
+                        <td class="visible-with-data" id="F_NONWORK">' + (feature.properties['F_NONWORK'] !== null ? autolinker.link(feature.properties['F_NONWORK'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SR_NONWORK</th>\
+                        <td class="visible-with-data" id="SR_NONWORK">' + (feature.properties['SR_NONWORK'] !== null ? autolinker.link(feature.properties['SR_NONWORK'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T_PRIMARY</th>\
+                        <td class="visible-with-data" id="T_PRIMARY">' + (feature.properties['T_PRIMARY'] !== null ? autolinker.link(feature.properties['T_PRIMARY'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T%_PRIMARY</th>\
+                        <td class="visible-with-data" id="T%_PRIMARY">' + (feature.properties['T%_PRIMARY'] !== null ? autolinker.link(feature.properties['T%_PRIMARY'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">M_PRIMARY</th>\
+                        <td class="visible-with-data" id="M_PRIMARY">' + (feature.properties['M_PRIMARY'] !== null ? autolinker.link(feature.properties['M_PRIMARY'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">F_PRIMARY</th>\
+                        <td class="visible-with-data" id="F_PRIMARY">' + (feature.properties['F_PRIMARY'] !== null ? autolinker.link(feature.properties['F_PRIMARY'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SR_PRIMARY</th>\
+                        <td class="visible-with-data" id="SR_PRIMARY">' + (feature.properties['SR_PRIMARY'] !== null ? autolinker.link(feature.properties['SR_PRIMARY'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T_SECUND</th>\
+                        <td class="visible-with-data" id="T_SECUND">' + (feature.properties['T_SECUND'] !== null ? autolinker.link(feature.properties['T_SECUND'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T%_SECUND</th>\
+                        <td class="visible-with-data" id="T%_SECUND">' + (feature.properties['T%_SECUND'] !== null ? autolinker.link(feature.properties['T%_SECUND'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">M_SECUND</th>\
+                        <td class="visible-with-data" id="M_SECUND">' + (feature.properties['M_SECUND'] !== null ? autolinker.link(feature.properties['M_SECUND'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">F_SECUND</th>\
+                        <td class="visible-with-data" id="F_SECUND">' + (feature.properties['F_SECUND'] !== null ? autolinker.link(feature.properties['F_SECUND'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SR_SECUND</th>\
+                        <td class="visible-with-data" id="SR_SECUND">' + (feature.properties['SR_SECUND'] !== null ? autolinker.link(feature.properties['SR_SECUND'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T_TERTIARY</th>\
+                        <td class="visible-with-data" id="T_TERTIARY">' + (feature.properties['T_TERTIARY'] !== null ? autolinker.link(feature.properties['T_TERTIARY'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T%_TERTIAR</th>\
+                        <td class="visible-with-data" id="T%_TERTIAR">' + (feature.properties['T%_TERTIAR'] !== null ? autolinker.link(feature.properties['T%_TERTIAR'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">M_TERTIARY</th>\
+                        <td class="visible-with-data" id="M_TERTIARY">' + (feature.properties['M_TERTIARY'] !== null ? autolinker.link(feature.properties['M_TERTIARY'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">F_TERTIARY</th>\
+                        <td class="visible-with-data" id="F_TERTIARY">' + (feature.properties['F_TERTIARY'] !== null ? autolinker.link(feature.properties['F_TERTIARY'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SR_TERTIAR</th>\
+                        <td class="visible-with-data" id="SR_TERTIAR">' + (feature.properties['SR_TERTIAR'] !== null ? autolinker.link(feature.properties['SR_TERTIAR'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T_CULTIVAT</th>\
+                        <td class="visible-with-data" id="T_CULTIVAT">' + (feature.properties['T_CULTIVAT'] !== null ? autolinker.link(feature.properties['T_CULTIVAT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T%_CULTIVA</th>\
+                        <td class="visible-with-data" id="T%_CULTIVA">' + (feature.properties['T%_CULTIVA'] !== null ? autolinker.link(feature.properties['T%_CULTIVA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">M_CULTIVAT</th>\
+                        <td class="visible-with-data" id="M_CULTIVAT">' + (feature.properties['M_CULTIVAT'] !== null ? autolinker.link(feature.properties['M_CULTIVAT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">F_CULTIVAT</th>\
+                        <td class="visible-with-data" id="F_CULTIVAT">' + (feature.properties['F_CULTIVAT'] !== null ? autolinker.link(feature.properties['F_CULTIVAT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SR_CULTIVA</th>\
+                        <td class="visible-with-data" id="SR_CULTIVA">' + (feature.properties['SR_CULTIVA'] !== null ? autolinker.link(feature.properties['SR_CULTIVA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T_AGRI_LAB</th>\
+                        <td class="visible-with-data" id="T_AGRI_LAB">' + (feature.properties['T_AGRI_LAB'] !== null ? autolinker.link(feature.properties['T_AGRI_LAB'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T%_AGRI_LA</th>\
+                        <td class="visible-with-data" id="T%_AGRI_LA">' + (feature.properties['T%_AGRI_LA'] !== null ? autolinker.link(feature.properties['T%_AGRI_LA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">M_AGRI_LAB</th>\
+                        <td class="visible-with-data" id="M_AGRI_LAB">' + (feature.properties['M_AGRI_LAB'] !== null ? autolinker.link(feature.properties['M_AGRI_LAB'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">F_AGRI_LAB</th>\
+                        <td class="visible-with-data" id="F_AGRI_LAB">' + (feature.properties['F_AGRI_LAB'] !== null ? autolinker.link(feature.properties['F_AGRI_LAB'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SR_AGRI_LA</th>\
+                        <td class="visible-with-data" id="SR_AGRI_LA">' + (feature.properties['SR_AGRI_LA'] !== null ? autolinker.link(feature.properties['SR_AGRI_LA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T_FISH_FOR</th>\
+                        <td class="visible-with-data" id="T_FISH_FOR">' + (feature.properties['T_FISH_FOR'] !== null ? autolinker.link(feature.properties['T_FISH_FOR'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T%_FISH_FO</th>\
+                        <td class="visible-with-data" id="T%_FISH_FO">' + (feature.properties['T%_FISH_FO'] !== null ? autolinker.link(feature.properties['T%_FISH_FO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">M_FISH_FOR</th>\
+                        <td class="visible-with-data" id="M_FISH_FOR">' + (feature.properties['M_FISH_FOR'] !== null ? autolinker.link(feature.properties['M_FISH_FOR'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">F_FISH_FOR</th>\
+                        <td class="visible-with-data" id="F_FISH_FOR">' + (feature.properties['F_FISH_FOR'] !== null ? autolinker.link(feature.properties['F_FISH_FOR'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SR_FISH_FO</th>\
+                        <td class="visible-with-data" id="SR_FISH_FO">' + (feature.properties['SR_FISH_FO'] !== null ? autolinker.link(feature.properties['SR_FISH_FO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T_MINING</th>\
+                        <td class="visible-with-data" id="T_MINING">' + (feature.properties['T_MINING'] !== null ? autolinker.link(feature.properties['T_MINING'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T%_MINING</th>\
+                        <td class="visible-with-data" id="T%_MINING">' + (feature.properties['T%_MINING'] !== null ? autolinker.link(feature.properties['T%_MINING'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">M_MINING</th>\
+                        <td class="visible-with-data" id="M_MINING">' + (feature.properties['M_MINING'] !== null ? autolinker.link(feature.properties['M_MINING'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">F_MINING</th>\
+                        <td class="visible-with-data" id="F_MINING">' + (feature.properties['F_MINING'] !== null ? autolinker.link(feature.properties['F_MINING'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SR_MINING</th>\
+                        <td class="visible-with-data" id="SR_MINING">' + (feature.properties['SR_MINING'] !== null ? autolinker.link(feature.properties['SR_MINING'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T_HH_INDUS</th>\
+                        <td class="visible-with-data" id="T_HH_INDUS">' + (feature.properties['T_HH_INDUS'] !== null ? autolinker.link(feature.properties['T_HH_INDUS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T%_HH_INDU</th>\
+                        <td class="visible-with-data" id="T%_HH_INDU">' + (feature.properties['T%_HH_INDU'] !== null ? autolinker.link(feature.properties['T%_HH_INDU'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">M_HH_INDUS</th>\
+                        <td class="visible-with-data" id="M_HH_INDUS">' + (feature.properties['M_HH_INDUS'] !== null ? autolinker.link(feature.properties['M_HH_INDUS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">F_HH_INDUS</th>\
+                        <td class="visible-with-data" id="F_HH_INDUS">' + (feature.properties['F_HH_INDUS'] !== null ? autolinker.link(feature.properties['F_HH_INDUS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SR_HH_INDU</th>\
+                        <td class="visible-with-data" id="SR_HH_INDU">' + (feature.properties['SR_HH_INDU'] !== null ? autolinker.link(feature.properties['SR_HH_INDU'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T_OTH_INDU</th>\
+                        <td class="visible-with-data" id="T_OTH_INDU">' + (feature.properties['T_OTH_INDU'] !== null ? autolinker.link(feature.properties['T_OTH_INDU'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T%_OTH_IND</th>\
+                        <td class="visible-with-data" id="T%_OTH_IND">' + (feature.properties['T%_OTH_IND'] !== null ? autolinker.link(feature.properties['T%_OTH_IND'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">M_OTH_INDU</th>\
+                        <td class="visible-with-data" id="M_OTH_INDU">' + (feature.properties['M_OTH_INDU'] !== null ? autolinker.link(feature.properties['M_OTH_INDU'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">F_OTH_INDU</th>\
+                        <td class="visible-with-data" id="F_OTH_INDU">' + (feature.properties['F_OTH_INDU'] !== null ? autolinker.link(feature.properties['F_OTH_INDU'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SR_OTH_IND</th>\
+                        <td class="visible-with-data" id="SR_OTH_IND">' + (feature.properties['SR_OTH_IND'] !== null ? autolinker.link(feature.properties['SR_OTH_IND'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T_CONSTRUC</th>\
+                        <td class="visible-with-data" id="T_CONSTRUC">' + (feature.properties['T_CONSTRUC'] !== null ? autolinker.link(feature.properties['T_CONSTRUC'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T%_CONSTRU</th>\
+                        <td class="visible-with-data" id="T%_CONSTRU">' + (feature.properties['T%_CONSTRU'] !== null ? autolinker.link(feature.properties['T%_CONSTRU'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">M_CONSTRUC</th>\
+                        <td class="visible-with-data" id="M_CONSTRUC">' + (feature.properties['M_CONSTRUC'] !== null ? autolinker.link(feature.properties['M_CONSTRUC'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">F_CONSTRUC</th>\
+                        <td class="visible-with-data" id="F_CONSTRUC">' + (feature.properties['F_CONSTRUC'] !== null ? autolinker.link(feature.properties['F_CONSTRUC'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SR_CONSTRU</th>\
+                        <td class="visible-with-data" id="SR_CONSTRU">' + (feature.properties['SR_CONSTRU'] !== null ? autolinker.link(feature.properties['SR_CONSTRU'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T_TRADE</th>\
+                        <td class="visible-with-data" id="T_TRADE">' + (feature.properties['T_TRADE'] !== null ? autolinker.link(feature.properties['T_TRADE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T%_TRADE</th>\
+                        <td class="visible-with-data" id="T%_TRADE">' + (feature.properties['T%_TRADE'] !== null ? autolinker.link(feature.properties['T%_TRADE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">M_TRADE</th>\
+                        <td class="visible-with-data" id="M_TRADE">' + (feature.properties['M_TRADE'] !== null ? autolinker.link(feature.properties['M_TRADE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">F_TRADE</th>\
+                        <td class="visible-with-data" id="F_TRADE">' + (feature.properties['F_TRADE'] !== null ? autolinker.link(feature.properties['F_TRADE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SR_TRADE</th>\
+                        <td class="visible-with-data" id="SR_TRADE">' + (feature.properties['SR_TRADE'] !== null ? autolinker.link(feature.properties['SR_TRADE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T_TRANSPOR</th>\
+                        <td class="visible-with-data" id="T_TRANSPOR">' + (feature.properties['T_TRANSPOR'] !== null ? autolinker.link(feature.properties['T_TRANSPOR'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T%_TRANSPO</th>\
+                        <td class="visible-with-data" id="T%_TRANSPO">' + (feature.properties['T%_TRANSPO'] !== null ? autolinker.link(feature.properties['T%_TRANSPO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">M_TRANSPOR</th>\
+                        <td class="visible-with-data" id="M_TRANSPOR">' + (feature.properties['M_TRANSPOR'] !== null ? autolinker.link(feature.properties['M_TRANSPOR'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">F_TRANSPOR</th>\
+                        <td class="visible-with-data" id="F_TRANSPOR">' + (feature.properties['F_TRANSPOR'] !== null ? autolinker.link(feature.properties['F_TRANSPOR'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SR_TRANSPO</th>\
+                        <td class="visible-with-data" id="SR_TRANSPO">' + (feature.properties['SR_TRANSPO'] !== null ? autolinker.link(feature.properties['SR_TRANSPO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T_SERVICES</th>\
+                        <td class="visible-with-data" id="T_SERVICES">' + (feature.properties['T_SERVICES'] !== null ? autolinker.link(feature.properties['T_SERVICES'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T%_SERVICE</th>\
+                        <td class="visible-with-data" id="T%_SERVICE">' + (feature.properties['T%_SERVICE'] !== null ? autolinker.link(feature.properties['T%_SERVICE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">M_SERVICES</th>\
+                        <td class="visible-with-data" id="M_SERVICES">' + (feature.properties['M_SERVICES'] !== null ? autolinker.link(feature.properties['M_SERVICES'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">F_SERVICES</th>\
+                        <td class="visible-with-data" id="F_SERVICES">' + (feature.properties['F_SERVICES'] !== null ? autolinker.link(feature.properties['F_SERVICES'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SR_SERVICE</th>\
+                        <td class="visible-with-data" id="SR_SERVICE">' + (feature.properties['SR_SERVICE'] !== null ? autolinker.link(feature.properties['SR_SERVICE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">LU_FOREST</th>\
+                        <td class="visible-with-data" id="LU_FOREST">' + (feature.properties['LU_FOREST'] !== null ? autolinker.link(feature.properties['LU_FOREST'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">LU%_FOREST</th>\
+                        <td class="visible-with-data" id="LU%_FOREST">' + (feature.properties['LU%_FOREST'] !== null ? autolinker.link(feature.properties['LU%_FOREST'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">LU_IRRIGAT</th>\
+                        <td class="visible-with-data" id="LU_IRRIGAT">' + (feature.properties['LU_IRRIGAT'] !== null ? autolinker.link(feature.properties['LU_IRRIGAT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">LU%_IRRIGA</th>\
+                        <td class="visible-with-data" id="LU%_IRRIGA">' + (feature.properties['LU%_IRRIGA'] !== null ? autolinker.link(feature.properties['LU%_IRRIGA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">LU_UNIRRIG</th>\
+                        <td class="visible-with-data" id="LU_UNIRRIG">' + (feature.properties['LU_UNIRRIG'] !== null ? autolinker.link(feature.properties['LU_UNIRRIG'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">LU%_UNIRRI</th>\
+                        <td class="visible-with-data" id="LU%_UNIRRI">' + (feature.properties['LU%_UNIRRI'] !== null ? autolinker.link(feature.properties['LU%_UNIRRI'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">LU_CULT_WA</th>\
+                        <td class="visible-with-data" id="LU_CULT_WA">' + (feature.properties['LU_CULT_WA'] !== null ? autolinker.link(feature.properties['LU_CULT_WA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">LU%_CULT_W</th>\
+                        <td class="visible-with-data" id="LU%_CULT_W">' + (feature.properties['LU%_CULT_W'] !== null ? autolinker.link(feature.properties['LU%_CULT_W'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">LU_NON_CUL</th>\
+                        <td class="visible-with-data" id="LU_NON_CUL">' + (feature.properties['LU_NON_CUL'] !== null ? autolinker.link(feature.properties['LU_NON_CUL'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">LU%_NON_C</th>\
+                        <td class="visible-with-data" id="LU%_NON_C">' + (feature.properties['LU%_NON_C'] !== null ? autolinker.link(feature.properties['LU%_NON_C'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">IR_WELL</th>\
+                        <td class="visible-with-data" id="IR_WELL">' + (feature.properties['IR_WELL'] !== null ? autolinker.link(feature.properties['IR_WELL'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">IR_TUBEWEL</th>\
+                        <td class="visible-with-data" id="IR_TUBEWEL">' + (feature.properties['IR_TUBEWEL'] !== null ? autolinker.link(feature.properties['IR_TUBEWEL'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">IR_TANK</th>\
+                        <td class="visible-with-data" id="IR_TANK">' + (feature.properties['IR_TANK'] !== null ? autolinker.link(feature.properties['IR_TANK'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">IR_LAKE</th>\
+                        <td class="visible-with-data" id="IR_LAKE">' + (feature.properties['IR_LAKE'] !== null ? autolinker.link(feature.properties['IR_LAKE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">IR_RIVER</th>\
+                        <td class="visible-with-data" id="IR_RIVER">' + (feature.properties['IR_RIVER'] !== null ? autolinker.link(feature.properties['IR_RIVER'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">IR_GVT_CAN</th>\
+                        <td class="visible-with-data" id="IR_GVT_CAN">' + (feature.properties['IR_GVT_CAN'] !== null ? autolinker.link(feature.properties['IR_GVT_CAN'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">IR_PRIV_CA</th>\
+                        <td class="visible-with-data" id="IR_PRIV_CA">' + (feature.properties['IR_PRIV_CA'] !== null ? autolinker.link(feature.properties['IR_PRIV_CA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">IR_OTHER</th>\
+                        <td class="visible-with-data" id="IR_OTHER">' + (feature.properties['IR_OTHER'] !== null ? autolinker.link(feature.properties['IR_OTHER'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_601sdt_0_0() {
+            return {
+                pane: 'pane_601sdt_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(152,125,183,1.0)',
+                interactive: false,
+            }
+        }
+        map.createPane('pane_601sdt_0');
+        map.getPane('pane_601sdt_0').style.zIndex = 400;
+        map.getPane('pane_601sdt_0').style['mix-blend-mode'] = 'normal';
+        var layer_601sdt_0 = new L.geoJson(json_601sdt_0, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_601sdt_0',
+            layerName: 'layer_601sdt_0',
+            pane: 'pane_601sdt_0',
+            onEachFeature: pop_601sdt_0,
+            style: style_601sdt_0_0,
+        });
+        bounds_group.addLayer(layer_601sdt_0);
+        map.addLayer(layer_601sdt_0);
+        function pop_601v_1(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">VILLAGE_ID</th>\
+                        <td class="visible-with-data" id="VILLAGE_ID">' + (feature.properties['VILLAGE_ID'] !== null ? autolinker.link(feature.properties['VILLAGE_ID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">NAME</th>\
+                        <td class="visible-with-data" id="NAME">' + (feature.properties['NAME'] !== null ? autolinker.link(feature.properties['NAME'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">TALUK</th>\
+                        <td class="visible-with-data" id="TALUK">' + (feature.properties['TALUK'] !== null ? autolinker.link(feature.properties['TALUK'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">DISTRICT</th>\
+                        <td class="visible-with-data" id="DISTRICT">' + (feature.properties['DISTRICT'] !== null ? autolinker.link(feature.properties['DISTRICT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T_POPULAT�</th>\
+                        <td class="visible-with-data" id="T_POPULAT�">' + (feature.properties['T_POPULAT�'] !== null ? autolinker.link(feature.properties['T_POPULAT�'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">DENSITY</th>\
+                        <td class="visible-with-data" id="DENSITY">' + (feature.properties['DENSITY'] !== null ? autolinker.link(feature.properties['DENSITY'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">HOUSEHOLDS</th>\
+                        <td class="visible-with-data" id="HOUSEHOLDS">' + (feature.properties['HOUSEHOLDS'] !== null ? autolinker.link(feature.properties['HOUSEHOLDS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">PERS/HOUSE</th>\
+                        <td class="visible-with-data" id="PERS/HOUSE">' + (feature.properties['PERS/HOUSE'] !== null ? autolinker.link(feature.properties['PERS/HOUSE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">MALE_POP</th>\
+                        <td class="visible-with-data" id="MALE_POP">' + (feature.properties['MALE_POP'] !== null ? autolinker.link(feature.properties['MALE_POP'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">FEMALE_POP</th>\
+                        <td class="visible-with-data" id="FEMALE_POP">' + (feature.properties['FEMALE_POP'] !== null ? autolinker.link(feature.properties['FEMALE_POP'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SR_POPULAT</th>\
+                        <td class="visible-with-data" id="SR_POPULAT">' + (feature.properties['SR_POPULAT'] !== null ? autolinker.link(feature.properties['SR_POPULAT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T_CHILDREN</th>\
+                        <td class="visible-with-data" id="T_CHILDREN">' + (feature.properties['T_CHILDREN'] !== null ? autolinker.link(feature.properties['T_CHILDREN'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">M_CHILDREN</th>\
+                        <td class="visible-with-data" id="M_CHILDREN">' + (feature.properties['M_CHILDREN'] !== null ? autolinker.link(feature.properties['M_CHILDREN'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">F_CHILDREN</th>\
+                        <td class="visible-with-data" id="F_CHILDREN">' + (feature.properties['F_CHILDREN'] !== null ? autolinker.link(feature.properties['F_CHILDREN'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SR_CHILDRE</th>\
+                        <td class="visible-with-data" id="SR_CHILDRE">' + (feature.properties['SR_CHILDRE'] !== null ? autolinker.link(feature.properties['SR_CHILDRE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T_SC</th>\
+                        <td class="visible-with-data" id="T_SC">' + (feature.properties['T_SC'] !== null ? autolinker.link(feature.properties['T_SC'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T%_SC</th>\
+                        <td class="visible-with-data" id="T%_SC">' + (feature.properties['T%_SC'] !== null ? autolinker.link(feature.properties['T%_SC'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">M_SC</th>\
+                        <td class="visible-with-data" id="M_SC">' + (feature.properties['M_SC'] !== null ? autolinker.link(feature.properties['M_SC'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">F_SC</th>\
+                        <td class="visible-with-data" id="F_SC">' + (feature.properties['F_SC'] !== null ? autolinker.link(feature.properties['F_SC'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SR_SC</th>\
+                        <td class="visible-with-data" id="SR_SC">' + (feature.properties['SR_SC'] !== null ? autolinker.link(feature.properties['SR_SC'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T_ST</th>\
+                        <td class="visible-with-data" id="T_ST">' + (feature.properties['T_ST'] !== null ? autolinker.link(feature.properties['T_ST'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T%_ST</th>\
+                        <td class="visible-with-data" id="T%_ST">' + (feature.properties['T%_ST'] !== null ? autolinker.link(feature.properties['T%_ST'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">M_ST</th>\
+                        <td class="visible-with-data" id="M_ST">' + (feature.properties['M_ST'] !== null ? autolinker.link(feature.properties['M_ST'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">F_ST</th>\
+                        <td class="visible-with-data" id="F_ST">' + (feature.properties['F_ST'] !== null ? autolinker.link(feature.properties['F_ST'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SR_ST</th>\
+                        <td class="visible-with-data" id="SR_ST">' + (feature.properties['SR_ST'] !== null ? autolinker.link(feature.properties['SR_ST'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T_LITTERAT</th>\
+                        <td class="visible-with-data" id="T_LITTERAT">' + (feature.properties['T_LITTERAT'] !== null ? autolinker.link(feature.properties['T_LITTERAT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T%_LITTERA</th>\
+                        <td class="visible-with-data" id="T%_LITTERA">' + (feature.properties['T%_LITTERA'] !== null ? autolinker.link(feature.properties['T%_LITTERA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">M_LITTERAT</th>\
+                        <td class="visible-with-data" id="M_LITTERAT">' + (feature.properties['M_LITTERAT'] !== null ? autolinker.link(feature.properties['M_LITTERAT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">F_LITTERAT</th>\
+                        <td class="visible-with-data" id="F_LITTERAT">' + (feature.properties['F_LITTERAT'] !== null ? autolinker.link(feature.properties['F_LITTERAT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SR_LITTERA</th>\
+                        <td class="visible-with-data" id="SR_LITTERA">' + (feature.properties['SR_LITTERA'] !== null ? autolinker.link(feature.properties['SR_LITTERA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T_WORKERS</th>\
+                        <td class="visible-with-data" id="T_WORKERS">' + (feature.properties['T_WORKERS'] !== null ? autolinker.link(feature.properties['T_WORKERS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T%_WORKERS</th>\
+                        <td class="visible-with-data" id="T%_WORKERS">' + (feature.properties['T%_WORKERS'] !== null ? autolinker.link(feature.properties['T%_WORKERS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">M_WORKERS</th>\
+                        <td class="visible-with-data" id="M_WORKERS">' + (feature.properties['M_WORKERS'] !== null ? autolinker.link(feature.properties['M_WORKERS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">F_WORKERS</th>\
+                        <td class="visible-with-data" id="F_WORKERS">' + (feature.properties['F_WORKERS'] !== null ? autolinker.link(feature.properties['F_WORKERS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SR_WORKERS</th>\
+                        <td class="visible-with-data" id="SR_WORKERS">' + (feature.properties['SR_WORKERS'] !== null ? autolinker.link(feature.properties['SR_WORKERS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T_MARGINAL</th>\
+                        <td class="visible-with-data" id="T_MARGINAL">' + (feature.properties['T_MARGINAL'] !== null ? autolinker.link(feature.properties['T_MARGINAL'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T%_MARGINA</th>\
+                        <td class="visible-with-data" id="T%_MARGINA">' + (feature.properties['T%_MARGINA'] !== null ? autolinker.link(feature.properties['T%_MARGINA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">M_MARGINAL</th>\
+                        <td class="visible-with-data" id="M_MARGINAL">' + (feature.properties['M_MARGINAL'] !== null ? autolinker.link(feature.properties['M_MARGINAL'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">F_MARGINAL</th>\
+                        <td class="visible-with-data" id="F_MARGINAL">' + (feature.properties['F_MARGINAL'] !== null ? autolinker.link(feature.properties['F_MARGINAL'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SR_MARGINA</th>\
+                        <td class="visible-with-data" id="SR_MARGINA">' + (feature.properties['SR_MARGINA'] !== null ? autolinker.link(feature.properties['SR_MARGINA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T_NONWORK</th>\
+                        <td class="visible-with-data" id="T_NONWORK">' + (feature.properties['T_NONWORK'] !== null ? autolinker.link(feature.properties['T_NONWORK'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T%_NONWORK</th>\
+                        <td class="visible-with-data" id="T%_NONWORK">' + (feature.properties['T%_NONWORK'] !== null ? autolinker.link(feature.properties['T%_NONWORK'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">M_NONWORK</th>\
+                        <td class="visible-with-data" id="M_NONWORK">' + (feature.properties['M_NONWORK'] !== null ? autolinker.link(feature.properties['M_NONWORK'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">F_NONWORK</th>\
+                        <td class="visible-with-data" id="F_NONWORK">' + (feature.properties['F_NONWORK'] !== null ? autolinker.link(feature.properties['F_NONWORK'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SR_NONWORK</th>\
+                        <td class="visible-with-data" id="SR_NONWORK">' + (feature.properties['SR_NONWORK'] !== null ? autolinker.link(feature.properties['SR_NONWORK'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T_PRIMARY</th>\
+                        <td class="visible-with-data" id="T_PRIMARY">' + (feature.properties['T_PRIMARY'] !== null ? autolinker.link(feature.properties['T_PRIMARY'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T%_PRIMARY</th>\
+                        <td class="visible-with-data" id="T%_PRIMARY">' + (feature.properties['T%_PRIMARY'] !== null ? autolinker.link(feature.properties['T%_PRIMARY'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">M_PRIMARY</th>\
+                        <td class="visible-with-data" id="M_PRIMARY">' + (feature.properties['M_PRIMARY'] !== null ? autolinker.link(feature.properties['M_PRIMARY'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">F_PRIMARY</th>\
+                        <td class="visible-with-data" id="F_PRIMARY">' + (feature.properties['F_PRIMARY'] !== null ? autolinker.link(feature.properties['F_PRIMARY'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SR_PRIMARY</th>\
+                        <td class="visible-with-data" id="SR_PRIMARY">' + (feature.properties['SR_PRIMARY'] !== null ? autolinker.link(feature.properties['SR_PRIMARY'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T_SECUND</th>\
+                        <td class="visible-with-data" id="T_SECUND">' + (feature.properties['T_SECUND'] !== null ? autolinker.link(feature.properties['T_SECUND'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T%_SECUND</th>\
+                        <td class="visible-with-data" id="T%_SECUND">' + (feature.properties['T%_SECUND'] !== null ? autolinker.link(feature.properties['T%_SECUND'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">M_SECUND</th>\
+                        <td class="visible-with-data" id="M_SECUND">' + (feature.properties['M_SECUND'] !== null ? autolinker.link(feature.properties['M_SECUND'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">F_SECUND</th>\
+                        <td class="visible-with-data" id="F_SECUND">' + (feature.properties['F_SECUND'] !== null ? autolinker.link(feature.properties['F_SECUND'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SR_SECUND</th>\
+                        <td class="visible-with-data" id="SR_SECUND">' + (feature.properties['SR_SECUND'] !== null ? autolinker.link(feature.properties['SR_SECUND'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T_TERTIARY</th>\
+                        <td class="visible-with-data" id="T_TERTIARY">' + (feature.properties['T_TERTIARY'] !== null ? autolinker.link(feature.properties['T_TERTIARY'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T%_TERTIAR</th>\
+                        <td class="visible-with-data" id="T%_TERTIAR">' + (feature.properties['T%_TERTIAR'] !== null ? autolinker.link(feature.properties['T%_TERTIAR'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">M_TERTIARY</th>\
+                        <td class="visible-with-data" id="M_TERTIARY">' + (feature.properties['M_TERTIARY'] !== null ? autolinker.link(feature.properties['M_TERTIARY'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">F_TERTIARY</th>\
+                        <td class="visible-with-data" id="F_TERTIARY">' + (feature.properties['F_TERTIARY'] !== null ? autolinker.link(feature.properties['F_TERTIARY'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SR_TERTIAR</th>\
+                        <td class="visible-with-data" id="SR_TERTIAR">' + (feature.properties['SR_TERTIAR'] !== null ? autolinker.link(feature.properties['SR_TERTIAR'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T_CULTIVAT</th>\
+                        <td class="visible-with-data" id="T_CULTIVAT">' + (feature.properties['T_CULTIVAT'] !== null ? autolinker.link(feature.properties['T_CULTIVAT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T%_CULTIVA</th>\
+                        <td class="visible-with-data" id="T%_CULTIVA">' + (feature.properties['T%_CULTIVA'] !== null ? autolinker.link(feature.properties['T%_CULTIVA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">M_CULTIVAT</th>\
+                        <td class="visible-with-data" id="M_CULTIVAT">' + (feature.properties['M_CULTIVAT'] !== null ? autolinker.link(feature.properties['M_CULTIVAT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">F_CULTIVAT</th>\
+                        <td class="visible-with-data" id="F_CULTIVAT">' + (feature.properties['F_CULTIVAT'] !== null ? autolinker.link(feature.properties['F_CULTIVAT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SR_CULTIVA</th>\
+                        <td class="visible-with-data" id="SR_CULTIVA">' + (feature.properties['SR_CULTIVA'] !== null ? autolinker.link(feature.properties['SR_CULTIVA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T_AGRI_LAB</th>\
+                        <td class="visible-with-data" id="T_AGRI_LAB">' + (feature.properties['T_AGRI_LAB'] !== null ? autolinker.link(feature.properties['T_AGRI_LAB'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T%_AGRI_LA</th>\
+                        <td class="visible-with-data" id="T%_AGRI_LA">' + (feature.properties['T%_AGRI_LA'] !== null ? autolinker.link(feature.properties['T%_AGRI_LA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">M_AGRI_LAB</th>\
+                        <td class="visible-with-data" id="M_AGRI_LAB">' + (feature.properties['M_AGRI_LAB'] !== null ? autolinker.link(feature.properties['M_AGRI_LAB'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">F_AGRI_LAB</th>\
+                        <td class="visible-with-data" id="F_AGRI_LAB">' + (feature.properties['F_AGRI_LAB'] !== null ? autolinker.link(feature.properties['F_AGRI_LAB'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SR_AGRI_LA</th>\
+                        <td class="visible-with-data" id="SR_AGRI_LA">' + (feature.properties['SR_AGRI_LA'] !== null ? autolinker.link(feature.properties['SR_AGRI_LA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T_FISH_FOR</th>\
+                        <td class="visible-with-data" id="T_FISH_FOR">' + (feature.properties['T_FISH_FOR'] !== null ? autolinker.link(feature.properties['T_FISH_FOR'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T%_FISH_FO</th>\
+                        <td class="visible-with-data" id="T%_FISH_FO">' + (feature.properties['T%_FISH_FO'] !== null ? autolinker.link(feature.properties['T%_FISH_FO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">M_FISH_FOR</th>\
+                        <td class="visible-with-data" id="M_FISH_FOR">' + (feature.properties['M_FISH_FOR'] !== null ? autolinker.link(feature.properties['M_FISH_FOR'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">F_FISH_FOR</th>\
+                        <td class="visible-with-data" id="F_FISH_FOR">' + (feature.properties['F_FISH_FOR'] !== null ? autolinker.link(feature.properties['F_FISH_FOR'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SR_FISH_FO</th>\
+                        <td class="visible-with-data" id="SR_FISH_FO">' + (feature.properties['SR_FISH_FO'] !== null ? autolinker.link(feature.properties['SR_FISH_FO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T_MINING</th>\
+                        <td class="visible-with-data" id="T_MINING">' + (feature.properties['T_MINING'] !== null ? autolinker.link(feature.properties['T_MINING'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T%_MINING</th>\
+                        <td class="visible-with-data" id="T%_MINING">' + (feature.properties['T%_MINING'] !== null ? autolinker.link(feature.properties['T%_MINING'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">M_MINING</th>\
+                        <td class="visible-with-data" id="M_MINING">' + (feature.properties['M_MINING'] !== null ? autolinker.link(feature.properties['M_MINING'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">F_MINING</th>\
+                        <td class="visible-with-data" id="F_MINING">' + (feature.properties['F_MINING'] !== null ? autolinker.link(feature.properties['F_MINING'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SR_MINING</th>\
+                        <td class="visible-with-data" id="SR_MINING">' + (feature.properties['SR_MINING'] !== null ? autolinker.link(feature.properties['SR_MINING'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T_HH_INDUS</th>\
+                        <td class="visible-with-data" id="T_HH_INDUS">' + (feature.properties['T_HH_INDUS'] !== null ? autolinker.link(feature.properties['T_HH_INDUS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T%_HH_INDU</th>\
+                        <td class="visible-with-data" id="T%_HH_INDU">' + (feature.properties['T%_HH_INDU'] !== null ? autolinker.link(feature.properties['T%_HH_INDU'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">M_HH_INDUS</th>\
+                        <td class="visible-with-data" id="M_HH_INDUS">' + (feature.properties['M_HH_INDUS'] !== null ? autolinker.link(feature.properties['M_HH_INDUS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">F_HH_INDUS</th>\
+                        <td class="visible-with-data" id="F_HH_INDUS">' + (feature.properties['F_HH_INDUS'] !== null ? autolinker.link(feature.properties['F_HH_INDUS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SR_HH_INDU</th>\
+                        <td class="visible-with-data" id="SR_HH_INDU">' + (feature.properties['SR_HH_INDU'] !== null ? autolinker.link(feature.properties['SR_HH_INDU'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T_OTH_INDU</th>\
+                        <td class="visible-with-data" id="T_OTH_INDU">' + (feature.properties['T_OTH_INDU'] !== null ? autolinker.link(feature.properties['T_OTH_INDU'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T%_OTH_IND</th>\
+                        <td class="visible-with-data" id="T%_OTH_IND">' + (feature.properties['T%_OTH_IND'] !== null ? autolinker.link(feature.properties['T%_OTH_IND'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">M_OTH_INDU</th>\
+                        <td class="visible-with-data" id="M_OTH_INDU">' + (feature.properties['M_OTH_INDU'] !== null ? autolinker.link(feature.properties['M_OTH_INDU'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">F_OTH_INDU</th>\
+                        <td class="visible-with-data" id="F_OTH_INDU">' + (feature.properties['F_OTH_INDU'] !== null ? autolinker.link(feature.properties['F_OTH_INDU'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SR_OTH_IND</th>\
+                        <td class="visible-with-data" id="SR_OTH_IND">' + (feature.properties['SR_OTH_IND'] !== null ? autolinker.link(feature.properties['SR_OTH_IND'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T_CONSTRUC</th>\
+                        <td class="visible-with-data" id="T_CONSTRUC">' + (feature.properties['T_CONSTRUC'] !== null ? autolinker.link(feature.properties['T_CONSTRUC'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T%_CONSTRU</th>\
+                        <td class="visible-with-data" id="T%_CONSTRU">' + (feature.properties['T%_CONSTRU'] !== null ? autolinker.link(feature.properties['T%_CONSTRU'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">M_CONSTRUC</th>\
+                        <td class="visible-with-data" id="M_CONSTRUC">' + (feature.properties['M_CONSTRUC'] !== null ? autolinker.link(feature.properties['M_CONSTRUC'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">F_CONSTRUC</th>\
+                        <td class="visible-with-data" id="F_CONSTRUC">' + (feature.properties['F_CONSTRUC'] !== null ? autolinker.link(feature.properties['F_CONSTRUC'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SR_CONSTRU</th>\
+                        <td class="visible-with-data" id="SR_CONSTRU">' + (feature.properties['SR_CONSTRU'] !== null ? autolinker.link(feature.properties['SR_CONSTRU'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T_TRADE</th>\
+                        <td class="visible-with-data" id="T_TRADE">' + (feature.properties['T_TRADE'] !== null ? autolinker.link(feature.properties['T_TRADE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T%_TRADE</th>\
+                        <td class="visible-with-data" id="T%_TRADE">' + (feature.properties['T%_TRADE'] !== null ? autolinker.link(feature.properties['T%_TRADE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">M_TRADE</th>\
+                        <td class="visible-with-data" id="M_TRADE">' + (feature.properties['M_TRADE'] !== null ? autolinker.link(feature.properties['M_TRADE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">F_TRADE</th>\
+                        <td class="visible-with-data" id="F_TRADE">' + (feature.properties['F_TRADE'] !== null ? autolinker.link(feature.properties['F_TRADE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SR_TRADE</th>\
+                        <td class="visible-with-data" id="SR_TRADE">' + (feature.properties['SR_TRADE'] !== null ? autolinker.link(feature.properties['SR_TRADE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T_TRANSPOR</th>\
+                        <td class="visible-with-data" id="T_TRANSPOR">' + (feature.properties['T_TRANSPOR'] !== null ? autolinker.link(feature.properties['T_TRANSPOR'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T%_TRANSPO</th>\
+                        <td class="visible-with-data" id="T%_TRANSPO">' + (feature.properties['T%_TRANSPO'] !== null ? autolinker.link(feature.properties['T%_TRANSPO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">M_TRANSPOR</th>\
+                        <td class="visible-with-data" id="M_TRANSPOR">' + (feature.properties['M_TRANSPOR'] !== null ? autolinker.link(feature.properties['M_TRANSPOR'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">F_TRANSPOR</th>\
+                        <td class="visible-with-data" id="F_TRANSPOR">' + (feature.properties['F_TRANSPOR'] !== null ? autolinker.link(feature.properties['F_TRANSPOR'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SR_TRANSPO</th>\
+                        <td class="visible-with-data" id="SR_TRANSPO">' + (feature.properties['SR_TRANSPO'] !== null ? autolinker.link(feature.properties['SR_TRANSPO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T_SERVICES</th>\
+                        <td class="visible-with-data" id="T_SERVICES">' + (feature.properties['T_SERVICES'] !== null ? autolinker.link(feature.properties['T_SERVICES'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">T%_SERVICE</th>\
+                        <td class="visible-with-data" id="T%_SERVICE">' + (feature.properties['T%_SERVICE'] !== null ? autolinker.link(feature.properties['T%_SERVICE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">M_SERVICES</th>\
+                        <td class="visible-with-data" id="M_SERVICES">' + (feature.properties['M_SERVICES'] !== null ? autolinker.link(feature.properties['M_SERVICES'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">F_SERVICES</th>\
+                        <td class="visible-with-data" id="F_SERVICES">' + (feature.properties['F_SERVICES'] !== null ? autolinker.link(feature.properties['F_SERVICES'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SR_SERVICE</th>\
+                        <td class="visible-with-data" id="SR_SERVICE">' + (feature.properties['SR_SERVICE'] !== null ? autolinker.link(feature.properties['SR_SERVICE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">EI_AVALAIB</th>\
+                        <td class="visible-with-data" id="EI_AVALAIB">' + (feature.properties['EI_AVALAIB'] !== null ? autolinker.link(feature.properties['EI_AVALAIB'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">EI_DISTANC</th>\
+                        <td class="visible-with-data" id="EI_DISTANC">' + (feature.properties['EI_DISTANC'] !== null ? autolinker.link(feature.properties['EI_DISTANC'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">P_SCHOOL</th>\
+                        <td class="visible-with-data" id="P_SCHOOL">' + (feature.properties['P_SCHOOL'] !== null ? autolinker.link(feature.properties['P_SCHOOL'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">M_SCHOOL</th>\
+                        <td class="visible-with-data" id="M_SCHOOL">' + (feature.properties['M_SCHOOL'] !== null ? autolinker.link(feature.properties['M_SCHOOL'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">H_SCHOOL</th>\
+                        <td class="visible-with-data" id="H_SCHOOL">' + (feature.properties['H_SCHOOL'] !== null ? autolinker.link(feature.properties['H_SCHOOL'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">PU_COLLEGE</th>\
+                        <td class="visible-with-data" id="PU_COLLEGE">' + (feature.properties['PU_COLLEGE'] !== null ? autolinker.link(feature.properties['PU_COLLEGE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">GR_COLLEGE</th>\
+                        <td class="visible-with-data" id="GR_COLLEGE">' + (feature.properties['GR_COLLEGE'] !== null ? autolinker.link(feature.properties['GR_COLLEGE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">ADULT_LIT_</th>\
+                        <td class="visible-with-data" id="ADULT_LIT_">' + (feature.properties['ADULT_LIT_'] !== null ? autolinker.link(feature.properties['ADULT_LIT_'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">INDUS_SCH</th>\
+                        <td class="visible-with-data" id="INDUS_SCH">' + (feature.properties['INDUS_SCH'] !== null ? autolinker.link(feature.properties['INDUS_SCH'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">TRAIN_SCH</th>\
+                        <td class="visible-with-data" id="TRAIN_SCH">' + (feature.properties['TRAIN_SCH'] !== null ? autolinker.link(feature.properties['TRAIN_SCH'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">OTHER_EI</th>\
+                        <td class="visible-with-data" id="OTHER_EI">' + (feature.properties['OTHER_EI'] !== null ? autolinker.link(feature.properties['OTHER_EI'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">MI_AVALAIB</th>\
+                        <td class="visible-with-data" id="MI_AVALAIB">' + (feature.properties['MI_AVALAIB'] !== null ? autolinker.link(feature.properties['MI_AVALAIB'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">MI_DISTANC</th>\
+                        <td class="visible-with-data" id="MI_DISTANC">' + (feature.properties['MI_DISTANC'] !== null ? autolinker.link(feature.properties['MI_DISTANC'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">HOSPITAL</th>\
+                        <td class="visible-with-data" id="HOSPITAL">' + (feature.properties['HOSPITAL'] !== null ? autolinker.link(feature.properties['HOSPITAL'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">MAT</th>\
+                        <td class="visible-with-data" id="MAT">' + (feature.properties['MAT'] !== null ? autolinker.link(feature.properties['MAT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">MATERNITY</th>\
+                        <td class="visible-with-data" id="MATERNITY">' + (feature.properties['MATERNITY'] !== null ? autolinker.link(feature.properties['MATERNITY'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">CHILD_W_C</th>\
+                        <td class="visible-with-data" id="CHILD_W_C">' + (feature.properties['CHILD_W_C'] !== null ? autolinker.link(feature.properties['CHILD_W_C'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">PRIM_H_C</th>\
+                        <td class="visible-with-data" id="PRIM_H_C">' + (feature.properties['PRIM_H_C'] !== null ? autolinker.link(feature.properties['PRIM_H_C'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">HEQLTH_C</th>\
+                        <td class="visible-with-data" id="HEQLTH_C">' + (feature.properties['HEQLTH_C'] !== null ? autolinker.link(feature.properties['HEQLTH_C'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">PRIM_H_S_C</th>\
+                        <td class="visible-with-data" id="PRIM_H_S_C">' + (feature.properties['PRIM_H_S_C'] !== null ? autolinker.link(feature.properties['PRIM_H_S_C'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">DISPENSARY</th>\
+                        <td class="visible-with-data" id="DISPENSARY">' + (feature.properties['DISPENSARY'] !== null ? autolinker.link(feature.properties['DISPENSARY'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">FP_C</th>\
+                        <td class="visible-with-data" id="FP_C">' + (feature.properties['FP_C'] !== null ? autolinker.link(feature.properties['FP_C'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">TB_C</th>\
+                        <td class="visible-with-data" id="TB_C">' + (feature.properties['TB_C'] !== null ? autolinker.link(feature.properties['TB_C'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">NURSING_H</th>\
+                        <td class="visible-with-data" id="NURSING_H">' + (feature.properties['NURSING_H'] !== null ? autolinker.link(feature.properties['NURSING_H'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">CHWC</th>\
+                        <td class="visible-with-data" id="CHWC">' + (feature.properties['CHWC'] !== null ? autolinker.link(feature.properties['CHWC'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">PRIV_PRACT</th>\
+                        <td class="visible-with-data" id="PRIV_PRACT">' + (feature.properties['PRIV_PRACT'] !== null ? autolinker.link(feature.properties['PRIV_PRACT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SUBS_PRACT</th>\
+                        <td class="visible-with-data" id="SUBS_PRACT">' + (feature.properties['SUBS_PRACT'] !== null ? autolinker.link(feature.properties['SUBS_PRACT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">OTHER_MI</th>\
+                        <td class="visible-with-data" id="OTHER_MI">' + (feature.properties['OTHER_MI'] !== null ? autolinker.link(feature.properties['OTHER_MI'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">PT_AVALAIB</th>\
+                        <td class="visible-with-data" id="PT_AVALAIB">' + (feature.properties['PT_AVALAIB'] !== null ? autolinker.link(feature.properties['PT_AVALAIB'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">PR_DISTANC</th>\
+                        <td class="visible-with-data" id="PR_DISTANC">' + (feature.properties['PR_DISTANC'] !== null ? autolinker.link(feature.properties['PR_DISTANC'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">POST_OFFIC</th>\
+                        <td class="visible-with-data" id="POST_OFFIC">' + (feature.properties['POST_OFFIC'] !== null ? autolinker.link(feature.properties['POST_OFFIC'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">TELEG_OFFI</th>\
+                        <td class="visible-with-data" id="TELEG_OFFI">' + (feature.properties['TELEG_OFFI'] !== null ? autolinker.link(feature.properties['TELEG_OFFI'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">PT_OFFICE</th>\
+                        <td class="visible-with-data" id="PT_OFFICE">' + (feature.properties['PT_OFFICE'] !== null ? autolinker.link(feature.properties['PT_OFFICE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">PHONE_CONN</th>\
+                        <td class="visible-with-data" id="PHONE_CONN">' + (feature.properties['PHONE_CONN'] !== null ? autolinker.link(feature.properties['PHONE_CONN'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">DW_AVALAIB</th>\
+                        <td class="visible-with-data" id="DW_AVALAIB">' + (feature.properties['DW_AVALAIB'] !== null ? autolinker.link(feature.properties['DW_AVALAIB'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">DW_DISTANC</th>\
+                        <td class="visible-with-data" id="DW_DISTANC">' + (feature.properties['DW_DISTANC'] !== null ? autolinker.link(feature.properties['DW_DISTANC'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">DW_TAP</th>\
+                        <td class="visible-with-data" id="DW_TAP">' + (feature.properties['DW_TAP'] !== null ? autolinker.link(feature.properties['DW_TAP'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">DW_WELL</th>\
+                        <td class="visible-with-data" id="DW_WELL">' + (feature.properties['DW_WELL'] !== null ? autolinker.link(feature.properties['DW_WELL'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">DW_TUBEWEL</th>\
+                        <td class="visible-with-data" id="DW_TUBEWEL">' + (feature.properties['DW_TUBEWEL'] !== null ? autolinker.link(feature.properties['DW_TUBEWEL'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">DW_HANDPUM</th>\
+                        <td class="visible-with-data" id="DW_HANDPUM">' + (feature.properties['DW_HANDPUM'] !== null ? autolinker.link(feature.properties['DW_HANDPUM'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">DW_RIVER</th>\
+                        <td class="visible-with-data" id="DW_RIVER">' + (feature.properties['DW_RIVER'] !== null ? autolinker.link(feature.properties['DW_RIVER'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">DW_FOUNTAI</th>\
+                        <td class="visible-with-data" id="DW_FOUNTAI">' + (feature.properties['DW_FOUNTAI'] !== null ? autolinker.link(feature.properties['DW_FOUNTAI'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">DW_SPRING</th>\
+                        <td class="visible-with-data" id="DW_SPRING">' + (feature.properties['DW_SPRING'] !== null ? autolinker.link(feature.properties['DW_SPRING'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">DW_CANAL</th>\
+                        <td class="visible-with-data" id="DW_CANAL">' + (feature.properties['DW_CANAL'] !== null ? autolinker.link(feature.properties['DW_CANAL'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">DW_TANK</th>\
+                        <td class="visible-with-data" id="DW_TANK">' + (feature.properties['DW_TANK'] !== null ? autolinker.link(feature.properties['DW_TANK'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">DW_OTHER</th>\
+                        <td class="visible-with-data" id="DW_OTHER">' + (feature.properties['DW_OTHER'] !== null ? autolinker.link(feature.properties['DW_OTHER'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">MK_AVALAIB</th>\
+                        <td class="visible-with-data" id="MK_AVALAIB">' + (feature.properties['MK_AVALAIB'] !== null ? autolinker.link(feature.properties['MK_AVALAIB'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">MK_DISTANC</th>\
+                        <td class="visible-with-data" id="MK_DISTANC">' + (feature.properties['MK_DISTANC'] !== null ? autolinker.link(feature.properties['MK_DISTANC'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">DAILY_MK</th>\
+                        <td class="visible-with-data" id="DAILY_MK">' + (feature.properties['DAILY_MK'] !== null ? autolinker.link(feature.properties['DAILY_MK'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">CF_AVALAIB</th>\
+                        <td class="visible-with-data" id="CF_AVALAIB">' + (feature.properties['CF_AVALAIB'] !== null ? autolinker.link(feature.properties['CF_AVALAIB'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">CF_DISTANC</th>\
+                        <td class="visible-with-data" id="CF_DISTANC">' + (feature.properties['CF_DISTANC'] !== null ? autolinker.link(feature.properties['CF_DISTANC'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">BUS_STOP</th>\
+                        <td class="visible-with-data" id="BUS_STOP">' + (feature.properties['BUS_STOP'] !== null ? autolinker.link(feature.properties['BUS_STOP'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">RAILWAY</th>\
+                        <td class="visible-with-data" id="RAILWAY">' + (feature.properties['RAILWAY'] !== null ? autolinker.link(feature.properties['RAILWAY'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">PUCCA_ROAD</th>\
+                        <td class="visible-with-data" id="PUCCA_ROAD">' + (feature.properties['PUCCA_ROAD'] !== null ? autolinker.link(feature.properties['PUCCA_ROAD'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">KACHCHA_RO</th>\
+                        <td class="visible-with-data" id="KACHCHA_RO">' + (feature.properties['KACHCHA_RO'] !== null ? autolinker.link(feature.properties['KACHCHA_RO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">FOOTPATH</th>\
+                        <td class="visible-with-data" id="FOOTPATH">' + (feature.properties['FOOTPATH'] !== null ? autolinker.link(feature.properties['FOOTPATH'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">NEAR_TOWN</th>\
+                        <td class="visible-with-data" id="NEAR_TOWN">' + (feature.properties['NEAR_TOWN'] !== null ? autolinker.link(feature.properties['NEAR_TOWN'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">DIST_TOWN</th>\
+                        <td class="visible-with-data" id="DIST_TOWN">' + (feature.properties['DIST_TOWN'] !== null ? autolinker.link(feature.properties['DIST_TOWN'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">PW_AVALAIB</th>\
+                        <td class="visible-with-data" id="PW_AVALAIB">' + (feature.properties['PW_AVALAIB'] !== null ? autolinker.link(feature.properties['PW_AVALAIB'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">PW_DOMESTI</th>\
+                        <td class="visible-with-data" id="PW_DOMESTI">' + (feature.properties['PW_DOMESTI'] !== null ? autolinker.link(feature.properties['PW_DOMESTI'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">PW_AGRICUL</th>\
+                        <td class="visible-with-data" id="PW_AGRICUL">' + (feature.properties['PW_AGRICUL'] !== null ? autolinker.link(feature.properties['PW_AGRICUL'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">PW_IND_COM</th>\
+                        <td class="visible-with-data" id="PW_IND_COM">' + (feature.properties['PW_IND_COM'] !== null ? autolinker.link(feature.properties['PW_IND_COM'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">PW_FOR_ALL</th>\
+                        <td class="visible-with-data" id="PW_FOR_ALL">' + (feature.properties['PW_FOR_ALL'] !== null ? autolinker.link(feature.properties['PW_FOR_ALL'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">LU_FOREST</th>\
+                        <td class="visible-with-data" id="LU_FOREST">' + (feature.properties['LU_FOREST'] !== null ? autolinker.link(feature.properties['LU_FOREST'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">LU%_FOREST</th>\
+                        <td class="visible-with-data" id="LU%_FOREST">' + (feature.properties['LU%_FOREST'] !== null ? autolinker.link(feature.properties['LU%_FOREST'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">LU_IRRIGAT</th>\
+                        <td class="visible-with-data" id="LU_IRRIGAT">' + (feature.properties['LU_IRRIGAT'] !== null ? autolinker.link(feature.properties['LU_IRRIGAT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">LU%_IRRIGA</th>\
+                        <td class="visible-with-data" id="LU%_IRRIGA">' + (feature.properties['LU%_IRRIGA'] !== null ? autolinker.link(feature.properties['LU%_IRRIGA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">LU_UNIRRIG</th>\
+                        <td class="visible-with-data" id="LU_UNIRRIG">' + (feature.properties['LU_UNIRRIG'] !== null ? autolinker.link(feature.properties['LU_UNIRRIG'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">LU%_UNIRRI</th>\
+                        <td class="visible-with-data" id="LU%_UNIRRI">' + (feature.properties['LU%_UNIRRI'] !== null ? autolinker.link(feature.properties['LU%_UNIRRI'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">LU_CULT_WA</th>\
+                        <td class="visible-with-data" id="LU_CULT_WA">' + (feature.properties['LU_CULT_WA'] !== null ? autolinker.link(feature.properties['LU_CULT_WA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">LU%_CULT_W</th>\
+                        <td class="visible-with-data" id="LU%_CULT_W">' + (feature.properties['LU%_CULT_W'] !== null ? autolinker.link(feature.properties['LU%_CULT_W'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">LU_NON_CUL</th>\
+                        <td class="visible-with-data" id="LU_NON_CUL">' + (feature.properties['LU_NON_CUL'] !== null ? autolinker.link(feature.properties['LU_NON_CUL'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">LU%_NON_C</th>\
+                        <td class="visible-with-data" id="LU%_NON_C">' + (feature.properties['LU%_NON_C'] !== null ? autolinker.link(feature.properties['LU%_NON_C'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">IR_WELL</th>\
+                        <td class="visible-with-data" id="IR_WELL">' + (feature.properties['IR_WELL'] !== null ? autolinker.link(feature.properties['IR_WELL'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">IR_TUBEWEL</th>\
+                        <td class="visible-with-data" id="IR_TUBEWEL">' + (feature.properties['IR_TUBEWEL'] !== null ? autolinker.link(feature.properties['IR_TUBEWEL'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">IR_TANK</th>\
+                        <td class="visible-with-data" id="IR_TANK">' + (feature.properties['IR_TANK'] !== null ? autolinker.link(feature.properties['IR_TANK'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">IR_LAKE</th>\
+                        <td class="visible-with-data" id="IR_LAKE">' + (feature.properties['IR_LAKE'] !== null ? autolinker.link(feature.properties['IR_LAKE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">IR_RIVER</th>\
+                        <td class="visible-with-data" id="IR_RIVER">' + (feature.properties['IR_RIVER'] !== null ? autolinker.link(feature.properties['IR_RIVER'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">IR_GVT_CAN</th>\
+                        <td class="visible-with-data" id="IR_GVT_CAN">' + (feature.properties['IR_GVT_CAN'] !== null ? autolinker.link(feature.properties['IR_GVT_CAN'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">IR_PRIV_CA</th>\
+                        <td class="visible-with-data" id="IR_PRIV_CA">' + (feature.properties['IR_PRIV_CA'] !== null ? autolinker.link(feature.properties['IR_PRIV_CA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">IR_OTHER</th>\
+                        <td class="visible-with-data" id="IR_OTHER">' + (feature.properties['IR_OTHER'] !== null ? autolinker.link(feature.properties['IR_OTHER'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_601v_1_0() {
+            return {
+                pane: 'pane_601v_1',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(229,182,54,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_601v_1');
+        map.getPane('pane_601v_1').style.zIndex = 401;
+        map.getPane('pane_601v_1').style['mix-blend-mode'] = 'normal';
+        var layer_601v_1 = new L.geoJson(json_601v_1, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_601v_1',
+            layerName: 'layer_601v_1',
+            pane: 'pane_601v_1',
+            onEachFeature: pop_601v_1,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_601v_1_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_601v_1);
+        map.addLayer(layer_601v_1);
+        let availableFields = [
+        { "id": "T_POPULAT�", "label": "Total population" },
+        { "id": "DENSITY", "label": "Density" },
+        { "id": "HOUSEHOLDS", "label": "Number of occupied households" },
+        { "id": "PERS/HOUSE", "label": "Number of persons per occupied household" },
+        { "id": "MALE_POP", "label": "Total male population" },
+        { "id": "FEMALE_POP", "label": "Total female population" },
+        { "id": "SR_POPULAT", "label": "Sex ratio" },
+        { "id": "T_CHILDREN", "label": "Total population below 6 years" },
+        { "id": "M_CHILDREN", "label": "Total male population below 6 years" },
+        { "id": "F_CHILDREN", "label": "Total female population below 6 years" },
+        { "id": "SR_CHILDRE", "label": "Sex ratio below 6 years" },
+        { "id": "T_SC", "label": "Total Scheduled Castes population" },
+        { "id": "T%_SC", "label": "% of Scheduled Castes population" },
+        { "id": "M_SC", "label": "Male Scheduled Castes population" },
+        { "id": "F_SC", "label": "Female Scheduled Castes population" },
+        { "id": "SR_SC", "label": "Sex ratio of Scheduled Castes" },
+        { "id": "T_ST", "label": "Total Scheduled Tribes population" },
+        { "id": "T%_ST", "label": "% of Scheduled Tribes population" },
+        { "id": "M_ST", "label": "Male Scheduled Tribes population" },
+        { "id": "F_ST", "label": "Female Scheduled Tribes population" },
+        { "id": "SR_ST", "label": "Sex ratio of Scheduled Tribes" },
+        { "id": "T_LITTERAT", "label": "Total literate population" },
+        { "id": "T%_LITTERA", "label": "% of literate population" },
+        { "id": "M_LITTERAT", "label": "Male literate population" },
+        { "id": "F_LITTERAT", "label": "Female literate population" },
+        { "id": "SR_LITTERA", "label": "Sex ratio of literate population" },
+        { "id": "T_WORKERS", "label": "Total workers" },
+        { "id": "T%_WORKERS", "label": "% of workers" },
+        { "id": "M_WORKERS", "label": "Male workers" },
+        { "id": "F_WORKERS", "label": "Female workers" },
+        { "id": "SR_WORKERS", "label": "Sex ratio of workers" },
+        { "id": "T_MARGINAL", "label": "Total marginal workers" },
+        { "id": "T%_MARGINA", "label": "% of marginal workers" },
+        { "id": "M_MARGINAL", "label": "Male marginal workers" },
+        { "id": "F_MARGINAL", "label": "Female marginal workers" },
+        { "id": "SR_MARGINA", "label": "Sex ratio of marginal workers" },
+        { "id": "T_NONWORK", "label": "Total non-workers" },
+        { "id": "T%_NONWORK", "label": "% of non-workers" },
+        { "id": "M_NONWORK", "label": "Male non-workers" },
+        { "id": "F_NONWORK", "label": "Female non-workers" },
+        { "id": "SR_NONWORK", "label": "Sex ratio of non-workers" },
+        { "id": "T_PRIMARY", "label": "Total primary sector workers" },
+        { "id": "T%_PRIMARY", "label": "% of primary sector workers" },
+        { "id": "M_PRIMARY", "label": "Male primary sector workers" },
+        { "id": "F_PRIMARY", "label": "Female primary sector workers" },
+        { "id": "SR_PRIMARY", "label": "Sex ratio of primary sector workers" },
+        { "id": "T_SECUND", "label": "Total secondary sector workers" },
+        { "id": "T%_SECUND", "label": "% of secondary sector workers" },
+        { "id": "M_SECUND", "label": "Male secondary sector workers" },
+        { "id": "F_SECUND", "label": "Female secondary sector workers" },
+        { "id": "SR_SECUND", "label": "Sex ratio of secondary sector workers" },
+        { "id": "T_TERTIARY", "label": "Total tertiary sector workers" },
+        { "id": "T%_TERTIAR", "label": "% of tertiary sector workers" },
+        { "id": "M_TERTIARY", "label": "Male tertiary sector workers" },
+        { "id": "F_TERTIARY", "label": "Female tertiary sector workers" },
+        { "id": "SR_TERTIAR", "label": "Sex ratio of tertiary sector workers" },
+        { "id": "T_CULTIVAT", "label": "Total cultivators" },
+        { "id": "T%_CULTIVA", "label": "% of cultivators" },
+        { "id": "M_CULTIVAT", "label": "Male cultivators" },
+        { "id": "F_CULTIVAT", "label": "Female cultivators" },
+        { "id": "SR_CULTIVA", "label": "Sex ratio of cultivators" },
+        { "id": "T_AGRI_LAB", "label": "Total agricultural laborers" },
+        { "id": "T%_AGRI_LA", "label": "% of agricultural laborers" },
+        { "id": "M_AGRI_LAB", "label": "Male agricultural laborers" },
+        { "id": "F_AGRI_LAB", "label": "Female agricultural laborers" },
+        { "id": "SR_AGRI_LA", "label": "Sex ratio of agricultural laborers" },
+        { "id": "T_FISH_FOR", "label": "Total fishery workers" },
+        { "id": "T%_FISH_FO", "label": "% of fishery workers" },
+        { "id": "M_FISH_FOR", "label": "Male fishery workers" },
+        { "id": "F_FISH_FOR", "label": "Female fishery workers" },
+        { "id": "SR_FISH_FO", "label": "Sex ratio of fishery workers" },
+        { "id": "T_MINING", "label": "Total mining workers" },
+        { "id": "T%_MINING", "label": "% of mining workers" },
+        { "id": "M_MINING", "label": "Male mining workers" },
+        { "id": "F_MINING", "label": "Female mining workers" },
+        { "id": "SR_MINING", "label": "Sex ratio of mining workers" },
+        { "id": "T_HH_INDUS", "label": "Total household industry workers" },
+        { "id": "T%_HH_INDU", "label": "% of household industry workers" },
+        { "id": "M_HH_INDUS", "label": "Male household industry workers" },
+        { "id": "F_HH_INDUS", "label": "Female household industry workers" },
+        { "id": "SR_HH_INDU", "label": "Sex ratio of household industry workers" },
+        { "id": "T_OTH_INDU", "label": "Total other industry workers" },
+        { "id": "T%_OTH_IND", "label": "% of other industry workers" },
+        { "id": "M_OTH_INDU", "label": "Male other industry workers" },
+        { "id": "F_OTH_INDU", "label": "Female other industry workers" },
+        { "id": "SR_OTH_IND", "label": "Sex ratio of other industry workers" },
+        { "id": "T_CONSTRUC", "label": "Total construction workers" },
+        { "id": "T%_CONSTRU", "label": "% of construction workers" },
+        { "id": "M_CONSTRUC", "label": "Male construction workers" },
+        { "id": "F_CONSTRUC", "label": "Female construction workers" },
+        { "id": "SR_CONSTRU", "label": "Sex ratio of construction workers" },
+        { "id": "T_TRADE", "label": "Total trade workers" },
+        { "id": "T%_TRADE", "label": "% of trade workers" },
+        { "id": "M_TRADE", "label": "Male trade workers" },
+        { "id": "F_TRADE", "label": "Female trade workers" },
+        { "id": "SR_TRADE", "label": "Sex ratio of trade workers" },
+{ "id": "T_TRANSPOR", "label": "Total transport workers" },
+{ "id": "T%_TRANSPO", "label": "% of transport workers" },
+{ "id": "M_TRANSPOR", "label": "Male transport workers" },
+{ "id": "F_TRANSPOR", "label": "Female transport workers" },
+{ "id": "SR_TRANSPO", "label": "Sex ratio of transport workers" },
+{ "id": "T_SERVICES", "label": "Total service workers" },
+{ "id": "T%_SERVICE", "label": "% of service workers" },
+{ "id": "M_SERVICES", "label": "Male service workers" },
+{ "id": "F_SERVICES", "label": "Female service workers" },
+{ "id": "SR_SERVICE", "label": "Sex ratio of service workers" },
+
+{ "id": "EI_DISTANC", "label": "Distance to Educational Infrastructure" },
+{ "id": "P_SCHOOL", "label": "Primary Schools" },
+{ "id": "M_SCHOOL", "label": "Middle Schools" },
+{ "id": "H_SCHOOL", "label": "High Schools" },
+{ "id": "PU_COLLEGE", "label": "Public Colleges" },
+{ "id": "GR_COLLEGE", "label": "Graduate Colleges" },
+{ "id": "ADULT_LIT_", "label": "Adult Literacy Centers" },
+{ "id": "INDUS_SCH", "label": "Industrial Schools" },
+{ "id": "TRAIN_SCH", "label": "Training Schools" },
+{ "id": "OTHER_EI", "label": "Other Educational Institutions" },
+
+{ "id": "MI_DISTANC", "label": "Distance to Medical Infrastructure" },
+{ "id": "HOSPITAL", "label": "Hospitals" },
+{ "id": "MAT", "label": "Maternity Homes" },
+{ "id": "MATERNITY", "label": "Maternity Centers" },
+{ "id": "CHILD_W_C", "label": "Child Welfare Centers" },
+{ "id": "PRIM_H_C", "label": "Primary Health Centers" },
+{ "id": "HEQLTH_C", "label": "Health Centers" },
+{ "id": "PRIM_H_S_C", "label": "Primary Health Sub-Centers" },
+{ "id": "DISPENSARY", "label": "Dispensaries" },
+{ "id": "FP_C", "label": "Family Planning Centers" },
+{ "id": "TB_C", "label": "Tuberculosis Clinics" },
+{ "id": "NURSING_H", "label": "Nursing Homes" },
+{ "id": "CHWC", "label": "Community Health Worker Centers" },
+{ "id": "PRIV_PRACT", "label": "Private Practitioners" },
+{ "id": "SUBS_PRACT", "label": "Subsidized Practitioners" },
+{ "id": "OTHER_MI", "label": "Other Medical Institutions" },
+
+{ "id": "PR_DISTANC", "label": "Distance to Post and Telegraph" },
+{ "id": "POST_OFFIC", "label": "Post Offices" },
+{ "id": "TELEG_OFFI", "label": "Telegraph Offices" },
+{ "id": "PT_OFFICE", "label": "Post and Telegraph Offices" },
+{ "id": "PHONE_CONN", "label": "Phone Connections" },
+
+{ "id": "DW_DISTANC", "label": "Distance to Drinking Water" },
+{ "id": "DW_TAP", "label": "Tap Water" },
+{ "id": "DW_WELL", "label": "Well Water" },
+{ "id": "DW_TUBEWEL", "label": "Tube Well Water" },
+{ "id": "DW_HANDPUM", "label": "Hand Pump Water" },
+{ "id": "DW_RIVER", "label": "River Water" },
+{ "id": "DW_FOUNTAI", "label": "Public Fountain Water" },
+{ "id": "DW_SPRING", "label": "Spring Water" },
+{ "id": "DW_CANAL", "label": "Canal Water" },
+{ "id": "DW_TANK", "label": "Tank Water" },
+{ "id": "DW_OTHER", "label": "Other Drinking Water Sources" },
+
+{ "id": "MK_DISTANC", "label": "Distance to Market" },
+{ "id": "DAILY_MK", "label": "Daily Market" },
+
+{ "id": "CF_DISTANC", "label": "Distance to Communication Facilities" },
+{ "id": "BUS_STOP", "label": "Bus Stops" },
+{ "id": "RAILWAY", "label": "Railway Stations" },
+{ "id": "PUCCA_ROAD", "label": "Pucca Roads" },
+{ "id": "KACHCHA_RO", "label": "Kachcha Roads" },
+{ "id": "FOOTPATH", "label": "Footpaths" },
+{ "id": "DIST_TOWN", "label": "Distance to Town" },
+
+{ "id": "PW_DOMESTI", "label": "Domestic Public Works" },
+{ "id": "PW_AGRICUL", "label": "Agricultural Public Works" },
+{ "id": "PW_IND_COM", "label": "Industrial/Commercial Public Works" },
+{ "id": "PW_FOR_ALL", "label": "Public Works for All" },
+{ "id": "LU_FOREST", "label": "Land Use - Forest" },
+{ "id": "LU%_FOREST", "label": "% of Land Use - Forest" },
+{ "id": "LU_IRRIGAT", "label": "Land Use - Irrigated" },
+{ "id": "LU%_IRRIGA", "label": "% of Land Use - Irrigated" },
+{ "id": "LU_UNIRRIG", "label": "Land Use - Unirrigated" },
+{ "id": "LU%_UNIRRI", "label": "% of Land Use - Unirrigated" },
+{ "id": "LU_CULT_WA", "label": "Land Use - Cultivable Waste" },
+{ "id": "LU%_CULT_W", "label": "% of Land Use - Cultivable Waste" },
+{ "id": "LU_NON_CUL", "label": "Land Use - Non-Cultivable" },
+{ "id": "LU%_NON_C", "label": "% of Land Use - Non-Cultivable" },
+{ "id": "IR_WELL", "label": "Irrigation - Wells" },
+{ "id": "IR_TUBEWEL", "label": "Irrigation - Tube Wells" },
+{ "id": "IR_TANK", "label": "Irrigation - Tanks" },
+{ "id": "IR_LAKE", "label": "Irrigation - Lakes" },
+{ "id": "IR_RIVER", "label": "Irrigation - Rivers" },
+{ "id": "IR_GVT_CAN", "label": "Irrigation - Government Canals" },
+{ "id": "IR_PRIV_CA", "label": "Irrigation - Private Canals" },
+{ "id": "IR_OTHER", "label": "Other Irrigation Sources" }
+    ];
+    function addField() {
+        const select = document.getElementById('addField');
+        const fieldId = select.value;
+        if (fieldId) {
+            const field = availableFields.find(f => f.id === fieldId);
+            if (field) {
+                addFieldControls(field);
+                select.value = ''; // Reset the select
+            }
+        }
+    }
+    
+    function addFieldControls(field) {
+        const filtersDiv = document.getElementById('filters');
+        const fieldDiv = document.createElement('div');
+        fieldDiv.id = `${field.id}_controls`;
+        fieldDiv.innerHTML = `
+            <label for="${field.id}">${field.label}: </label>
+            <select id="${field.id}_op">
+                <option value="<">Less Than</option>
+                <option value=">">Greater Than</option>
+                <option value="=">Equal To</option>
+                <option value="between">Between</option>
+            </select>
+            <input type="text" id="${field.id}">
+            <input type="text" id="${field.id}_2" style="display: none;">
+            <button onclick="removeField('${field.id}_controls')">Remove</button>
+        `;
+        filtersDiv.appendChild(fieldDiv);
+    
+        // Add event listener for 'between' operator
+        console.log(document.getElementById(`${field.id}_op`));
+        document.getElementById(`${field.id}_op`).addEventListener('change', function () {
+            const betweenInput = document.getElementById(`${field.id}_2`);
+            if (this.value === 'between') {
+                betweenInput.style.display = 'inline';
+            } else {
+                betweenInput.style.display = 'none';
+            }
+        });
+    }
+    
+    function removeField(fieldControlsId) {
+        const fieldDiv = document.getElementById(fieldControlsId);
+        if (fieldDiv) {
+            fieldDiv.remove();
+        }
+    }
+    
+    function applyFilter() {
+        // Function to apply the filter based on user inputs
+        const criteria = availableFields.map(f => ({ id: f.id, property: f.id }));
+        // Get the input values and operators
+        let filters = {};
+        console.log(criteria);
+        criteria.forEach(c => {
+          console.log(c.id);
+          console.log(c.property);
+          var value='',operator='',value2='';
+          if(document.getElementById(c.id)){
+            value = document.getElementById(c.id).value;
+            operator = document.getElementById(c.id + '_op').value;
+            value2 = document.getElementById(c.id + '_2').value;
+          }
+            if (value !== '' || (operator === 'between' && value !== '' && value2 !== '')) {
+                filters[c.property] = { operator: operator, value: parseFloat(value), value2: parseFloat(value2) };
+            }
+        });
+    
+        // Function to check if a feature matches the filter criteria
+        function matchesFilter(feature) {
+            for (let prop in filters) {
+                const { operator, value, value2 } = filters[prop];
+                const featureValue = feature.properties[prop];
+                if (operator === '<' && !(featureValue < value)) return false;
+                if (operator === '>' && !(featureValue > value)) return false;
+                if (operator === '=' && !(featureValue == value)) return false;
+                if (operator === 'between' && !(featureValue >= value && featureValue <= value2)) return false;
+            }
+            return true;
+        }
+    
+        // Reset the styles of all features
+         layer_601v_1.setStyle({
+            color: '#3388ff', // default border color
+            weight: 2,
+            opacity: 1,
+            fillColor: '#ffffff', // default fill color
+            fillOpacity: 0.2
+        });
+    
+        // Apply new styles to the features that match the filter criteria
+         layer_601v_1.eachLayer(layer => {
+            if (matchesFilter(layer.feature)) {
+                layer.setStyle({
+                    color: '#3388ff', // retain the border color
+                    weight: 2,
+                    opacity: 1,
+                    fillColor: '#ff0000', // highlight color
+                    fillOpacity: 0.5
+                });
+            }
+        });
+    }
+    
+          
+          function revertFeatures() {
+               layer_601v_1.eachLayer(function(layer) {
+                  layer.setStyle(style_601v_1_0());
+              });
+          }
+    
+        var baseMaps = {};
+        var overlaysTree = [
+        {label: '<b>vill</b>', selectAllCheckbox: true, children: [
+            {label: '<img src="legend/601v_1.png" /> 601v', layer: layer_601v_1},]},
+        {label: '<b>sdt</b>', selectAllCheckbox: true, children: [
+            {label: '<img src="legend/601sdt_0.png" /> 601sdt', layer: layer_601sdt_0},]},]
+        var lay = L.control.layers.tree(null, overlaysTree,{
+            //namedToggle: true,
+            //selectorBack: false,
+            //closedSymbol: '&#8862; &#x1f5c0;',
+            //openedSymbol: '&#8863; &#x1f5c1;',
+            //collapseAll: 'Collapse all',
+            //expandAll: 'Expand all',
+            collapsed: true,
+        });
+        lay.addTo(map);
+        setBounds();
+        var i = 0;
+        layer_601sdt_0.eachLayer(function(layer) {
+            var context = {
+                feature: layer.feature,
+                variables: {}
+            };
+            layer.bindTooltip((layer.feature.properties['NAME'] !== null?String('<div style="color: #323232; font-size: 10pt; font-family: \'Arial\', sans-serif;">' + layer.feature.properties['NAME']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_601sdt_0'});
+            labels.push(layer);
+            totalMarkers += 1;
+              layer.added = true;
+              addLabel(layer, i);
+              i++;
+        });
+        var i = 0;
+        layer_601v_1.eachLayer(function(layer) {
+            var context = {
+                feature: layer.feature,
+                variables: {}
+            };
+            layer.bindTooltip((layer.feature.properties['NAME'] !== null?String('<div style="color: #323232; font-size: 10pt; font-family: \'Arial\', sans-serif;">' + layer.feature.properties['NAME']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_601v_1'});
+            labels.push(layer);
+            totalMarkers += 1;
+              layer.added = true;
+              addLabel(layer, i);
+              i++;
+        });
+        map.addControl(new L.Control.Search({
+            layer: layer_601v_1,
+            initial: false,
+            hideMarkerOnCollapse: true,
+            propertyName: 'NAME'}));
+        document.getElementsByClassName('search-button')[0].className +=
+         ' fa fa-binoculars';
+        resetLabels([layer_601sdt_0,layer_601v_1]);
+        map.on("zoomend", function(){
+            resetLabels([layer_601sdt_0,layer_601v_1]);
+        });
+        map.on("layeradd", function(){
+            resetLabels([layer_601sdt_0,layer_601v_1]);
+        });
+        map.on("layerremove", function(){
+            resetLabels([layer_601sdt_0,layer_601v_1]);
+        });
+        </script>
+    </body>
+</html>

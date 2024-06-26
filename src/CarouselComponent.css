@@ -1,0 +1,40 @@
+:root {
+  --primary-color: #6c757d; /* Replacing blue with gray */
+  --secondary-color: #343a40; /* Darker shade for text */
+  --background-color: #f8f9fa; /* Light background */
+  --accent-color: #ffcc00; /* Accent color for highlights */
+  --text-color: #333;
+  --white-color: #ffffff;
+  --carousel-text-color: #ffffff; /* Text color from the image */
+  --carousel-background-color: #6c757d; /* Background color from the image */
+  --image-border-color: #6c757d; /* Gray border color for the image */
+}
+
+.carousel-container {
+  border-radius: 10px; /* Optional: add rounded corners */
+  margin-top: 30px;
+  padding: 25px; /* Optional: add padding around the image */
+  background-color: var(--background-color); /* Adjust the background color if needed */
+}
+
+.carousel-item img {
+  border: 5px solid var(--image-border-color); /* Add gray border around the image */
+  border-radius: 20px; /* Optional: add rounded corners to the image */
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 70% !important;/* Adjust the percentage as needed */
+  max-width: 100%; /* Ensure the image does not exceed the container width */
+  height: auto; /* Maintain aspect ratio */
+}
+
+.carousel-caption {
+  text-align: center;
+  font-style: normal;
+  font-size: 20px;
+  font-weight: bolder;
+  color: var(--carousel-text-color); /* Use the new variable for text color */
+  background-color: var(--carousel-background-color); /* Use the new variable for background color */
+  padding: 10px;
+  border-radius: 5px; /* Optional: add rounded corners to the caption */
+}

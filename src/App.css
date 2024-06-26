@@ -1,0 +1,109 @@
+/* App.css */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+.main-content {
+  margin-top: 80px; /* Adjust this value to match the height of your navbar */
+  padding: 20px; /* Add padding for better spacing */
+}
+
+.navbar-title {
+  margin-left: 10px;
+}
+
+.nav-item {
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+.map-container {
+  padding: 20px;
+  width: 100%; /* Ensure the container takes the full width */
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 15px; /* Increase padding for larger size */
+  margin-bottom: 10px;
+  font-size: 1.2em; /* Increase font size */
+  color: black; /* Change text color to black */
+}
+
+.form-group label {
+  font-size: 1.2em; /* Make label larger */
+  color: black; /* Make label text black */
+}
+
+.btn {
+  margin-right: 10px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.table-container {
+  margin: 0; /* Remove margin from the container */
+  padding: 0; /* Remove padding from the container */
+}
+
+.table {
+  width: 100%; /* Ensure the table takes full width */
+  margin: 0; /* Remove default table margin */
+  border-collapse: collapse; /* Ensure borders are collapsed */
+}
+
+.table th, .table td {
+  border: 1px solid #ddd; /* Add border to table cells */
+  padding: 8px; /* Adjust padding */
+}
+
+/* Ensure the dropdown appears below the select element */
+.form-group {
+  position: relative;
+  overflow: visible;
+}
+
+.form-control {
+  position: relative;
+  z-index: 1;
+}
+
+.form-control::after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  height: 200px; /* Adjust height as needed */
+  z-index: -1;
+  background: transparent;
+}
+
+/* Add this to ensure dropdown appears below the select element */
+.form-control {
+  position: relative;
+}
+
+.form-control select {
+  position: relative;
+  z-index: 1;
+}
+
+.form-control select:focus + .dropdown-menu,
+.form-control select:active + .dropdown-menu {
+  display: block;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  z-index: 2;
+}

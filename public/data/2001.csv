@@ -1,0 +1,66 @@
+Code,Atttribute(field)
+STATE,State
+DISTRICT,District
+TAHSIL,Tahsil
+TOWN_VILL,Town/Village
+WARD,Ward
+EB,Enumeration Block
+LEVEL,Level
+NAME,Name
+TRU,Total/Rural/Urban
+No_HH,Number of Households
+TOT_P,Total Population
+TOT_M,Total Male
+TOT_F,Total Female
+P_06,Population Age 0-6
+M_06,Male Age 0-6
+F_06,Female Age 0-6
+P_SC,Population Scheduled Castes
+M_SC,Male Scheduled Castes
+F_SC,Female Scheduled Castes
+P_ST,Population Scheduled Tribes
+M_ST,Male Scheduled Tribes
+F_ST,Female Scheduled Tribes
+P_LIT,Population Literate
+M_LIT,Male Literate
+F_LIT,Female Literate
+P_ILL,Population Illiterate
+M_ILL,Male Illiterate
+F_ILL,Female Illiterate
+TOT_WORK_P,Total Workers
+TOT_WORK_M,Male Workers
+TOT_WORK_F,Female Workers
+MAINWORK_P,Main Workers
+MAINWORK_M,Male Main Workers
+MAINWORK_F,Female Main Workers
+MAIN_CL_P,Main Cultivators
+MAIN_CL_M,Male Cultivators
+MAIN_CL_F,Female Cultivators
+MAIN_AL_P,Main Agricultural Labourers
+MAIN_AL_M,Male Agricultural Labourers
+MAIN_AL_F,Female Agricultural Labourers
+MAIN_HH_P,Main Household Industry Workers
+MAIN_HH_M,Male Household Industry Workers
+MAIN_HH_F,Female Household Industry Workers
+MAIN_OT_P,Main Other Workers
+MAIN_OT_M,Male Other Workers
+MAIN_OT_F,Female Other Workers
+MARGWORK_P,Marginal Workers
+MARGWORK_M,Male Marginal Workers
+MARGWORK_F,Female Marginal Workers
+MARG_CL_P,Marginal Cultivators
+MARG_CL_M,Male Marginal Cultivators
+MARG_CL_F,Female Marginal Cultivators
+MARG_AL_P,Marginal Agricultural Labourers
+MARG_AL_M,Male Marginal Agricultural Labourers
+MARG_AL_F,Female Marginal Agricultural Labourers
+MARG_HH_P,Marginal Household Industry Workers
+MARG_HH_M,Male Marginal Household Industry Workers
+MARG_HH_F,Female Marginal Household Industry Workers
+MARG_OT_P,Marginal Other Workers
+MARG_OT_M,Male Marginal Other Workers
+MARG_OT_F,Female Marginal Other Workers
+NON_WORK_P,Non-Workers
+NON_WORK_M,Male Non-Workers
+NON_WORK_F,Female Non-Workers
+SUB-DISTT,Sub-District

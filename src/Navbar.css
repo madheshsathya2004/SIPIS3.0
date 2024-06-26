@@ -1,0 +1,59 @@
+/* Navbar.css */
+.navbar-custom {
+  padding: 10px 20px;
+  background-color: var(--secondary-color);
+  border-bottom: 1px solid var(--primary-color);
+  position: fixed;
+  width: 100%;
+  z-index: 1030; /* Ensure it stays on top */
+  top: 0;
+}
+
+.logo {
+  height: 50px; /* Adjusted logo size */
+  margin-right: 10px;
+}
+
+.navbar-title {
+  font-size: 2.5em;
+  font-weight: 700;
+  color: var(--white-color);
+  margin-left: 10px;
+}
+
+.nav-link, .dropdown-item {
+  color: var(--white-color) !important;
+  transition: color 0.3s ease, background-color 0.3s ease, padding 0.3s ease;
+  font-weight: 500;
+  font-size: 1.2em;
+  padding: 10px 15px;
+  border-radius: 5px;
+  text-decoration: none !important;
+}
+
+.nav-link:hover, .dropdown-item:hover {
+  color: var(--secondary-color) !important;
+  background-color: var(--accent-color) !important;
+  text-decoration: none !important;
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+  color: var(--white-color) !important;
+  transition: color 0.3s ease;
+}
+
+.navbar-brand:hover {
+  color: var(--accent-color) !important;
+}
+
+.nav-item {
+  margin-left: 25px;
+}
+
+.dropdown-menu {
+  background-color: var(--secondary-color) !important;
+  border: none;
+}

@@ -1,0 +1,218 @@
+{
+  "Chengalpattu MGR": {
+    "Gummidipundi": [],
+    "Uttukkottai": [],
+    "Tiruvallur": [],
+    "Saidapet": [],
+    "Sriperumbudur": [],
+    "Kanchipuram": [],
+    "Uttiramerur": [],
+    "Tiruttani": [],
+    "Pallipattu": [],
+    "Ponneri": [],
+    "Chengalpattu": [],
+    "Madurantakam": [],
+    "Cheyur": []
+  },
+  "Chidambaranar": {
+    "Vilattikulam": [],
+    "Kovilpatti": [],
+    "Ottappidaram": [],
+    "Tuticorin": [],
+    "Srivaikuntam": [],
+    "Tiruchchendur": [],
+    "Sattankulam": []
+  },
+  "Coimbatore": {
+    "Udumalaippettai": [],
+    "Avanashi": [],
+    "Mettuppalaiyam": [],
+    "Palladam": [],
+    "Tiruppur": [],
+    "Valparai": [],
+    "Pollachi": [],
+    "Coimbatore North": [],
+    "Coimbatore South": []
+  },
+  "Dharmapuri": {
+    "Dharmapuri": [],
+    "Pennagaram": [],
+    "Hosur": [],
+    "Uttangarai": [],
+    "Harur": [],
+    "Denkanikota": [],
+    "Krishnagiri": [],
+    "Palakkodu": []
+  },
+  "Dindigul Anna": {
+    "Vedasandur": [],
+    "Palani": [],
+    "Nattam": [],
+    "Dindigul": [],
+    "Kodaikanal": [],
+    "Nilakkottai": []
+  },
+  "Madurai": {
+    "Vadipatti": [],
+    "Melur": [],
+    "Madurai North": [],
+    "Madurai South": [],
+    "Tirumangalam": [],
+    "Usilampatti": [],
+    "Uttamapalaiyam": [],
+    "Andipatti": [],
+    "Periyakulam": []
+  },
+  "Kamarajar": {
+    "Tiruchuli": [],
+    "Sattur": [],
+    "Virudunagar": [],
+    "Aruppukkottai": [],
+    "Rajapalaiyam": [],
+    "Srivilliputtur": []
+  },
+  "Kanniyakumari": {
+    "Agastiswaram": [],
+    "Thovala": [],
+    "Kalkulam": [],
+    "Vilavankod": []
+  },
+  "Nilgiri": {
+    "Kotagiri": [],
+    "Coonoor": [],
+    "Ootacamund": [],
+    "Gudalur": []
+  },
+  "Pasumpon Muthuramalinga Theva": {
+    "Tiruppattur": [],
+    "Karaikkudi": [],
+    "Sivaganga": [],
+    "Manamadurai": [],
+    "Devakottai": [],
+    "Ilaiyankudi": []
+  },
+  "Periyar": {
+    "Erode": [],
+    "Gopichettipalaiy": [],
+    "Perundurai": [],
+    "Bhavani": [],
+    "Satyamangalam": [],
+    "Dharapuram": [],
+    "Kangayam": []
+  },
+  "Pudukkottai": {
+    "Avadaiyarkovil": [],
+    "Tirumayam": [],
+    "Arantangi": [],
+    "Kulattur": [],
+    "Alangudi": [],
+    "Gandarvakottai": [],
+    "Pudukkottai": []
+  },
+  "Ramanathapuram": {
+    "Ramanathapuram": [],
+    "Tiruvadanai": [],
+    "Paramakkudi": [],
+    "Mudukulattur": [],
+    "Kamudi": [],
+    "Rameswaram": []
+  },
+  "Salem": {
+    "Yercaud": [],
+    "Salem": [],
+    "Omalur": [],
+    "Mettur": [],
+    "Sankari": [],
+    "Tiruchengodu": [],
+    "Attur": [],
+    "Rasipuram": [],
+    "Paramathivelur": [],
+    "Namakkal": []
+  },
+  "South Arcot": {
+    "Kallakkurichi": [],
+    "Tirukkoyilur": [],
+    "Gingee": [],
+    "Ulundurpettai": [],
+    "Panruti": [],
+    "Vriddhachalam": [],
+    "Tittakudi": [],
+    "Cuddalore": [],
+    "Villupuram": [],
+    "Chidambaram": [],
+    "Kattumannarkoil": [],
+    "Vanur": [],
+    "Tindivanam": []
+  },
+  "Thanjavur": {
+    "Sirkazhi": [],
+    "Vedaranniyam": [],
+    "Tirutturaippundi": [],
+    "Pattukkottai": [],
+    "Peravurani": [],
+    "Tiruvidaimarudur": [],
+    "Kumbakonam": [],
+    "Nagappattinam": [],
+    "Thiruvarur": [],
+    "Orattanadu": [],
+    "Thiruvaiyaru": [],
+    "Thanjavur": [],
+    "Nidamangalam": [],
+    "Mannargudi": [],
+    "Nannilam": [],
+    "Kodavasal": [],
+    "Tharangampadi": [],
+    "Mayiladuthurai": [],
+    "Valangiman": [],
+    "Papanasam": []
+  },
+  "Tirunelveli Kattabomman": {
+    "Sankarankovil": [],
+    "Sivagiri": [],
+    "Tenkasi": [],
+    "Shencottah": [],
+    "Ambasamudram": [],
+    "Radhapuram": [],
+    "Nanguneri": [],
+    "Palayankottai": [],
+    "Tirunelveli": []
+  },
+  "Tiruvannamalai Sambuvarayar": {
+    "Cheyyar": [],
+    "Polur": [],
+    "Tiruvannamalai": [],
+    "Chengam": [],
+    "Arani": [],
+    "Vandavasi": []
+  },
+  "Tiruchirappalli": {
+    "Udayarpalayam": [],
+    "Ariyalur": [],
+    "Perambalur": [],
+    "Turaiyur": [],
+    "Lalgudi": [],
+    "Tiruchirappalli": [],
+    "Musiri": [],
+    "Kulittalai": [],
+    "Manapparai": [],
+    "Karur": []
+  },
+  "North Arcot Ambedkar": {
+    "Walajapet": [],
+    "Arakkonam": [],
+    "Gudiyattam": [],
+    "Vellore": [],
+    "Vaniyambadi": [],
+    "Tiruppattur": [],
+    "Arcot": []
+  },
+  "Pondicherry": {
+    "Pondicherry": []
+  },
+  "Karaikal": {
+    "Karaikal": []
+  },
+  "Madras": {
+    "Madras": []
+  }
+}

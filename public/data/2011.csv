@@ -1,0 +1,95 @@
+Code,Attribute(field)
+STATE,State - Code
+DISTRICT,District - Code
+TAHSIL,Tashil - Code
+TOWN_VILL,Town/village - Code
+WARD,Ward - Code
+EB,EB - Code
+LEVEL,State/District/Taluk/Town/Villlage
+NAME,State/District/Taluk/Town/Villlage Name
+TRU,"T - Total, R - Rural, U - Urban"
+No_HH,Number of Households
+TOT_P,Total Population
+TOT_M,Total Males
+TOT_F,Total Females
+P_06,Population in the Age group 0-6
+M_06,Male Population in the Age group 0-6
+F_06,Female Population in the Age group 0-6
+P_SC,Population Scheduled Caste
+M_SC,Male Population Scheduled Caste
+F_SC,Female Population Scheduled Caste
+P_ST,Population Scheduled Tribe
+M_ST,Male Population Scheduled Tribe
+F_ST,Female Population Scheduled Tribe
+P_LIT,Literates
+M_LIT,Male literates
+F_LIT,Female literates
+P_ILL,Illiterates
+M_ILL,Male Illiterates
+F_ILL,Female Illiterates
+TOT_WORK_P,Total Workers
+TOT_WORK_M,Total Male Workers
+TOT_WORK_F,Total Female Workers
+MAINWORK_P,Main Workers
+MAINWORK_M,Male Main Workers
+MAINWORK_F,Female Main Workers
+MAIN_CL_P,Main Cultivators
+MAIN_CL_M,Male Main Cultivators
+MAIN_CL_F,Female Main Cultivators
+MAIN_AL_P,Main Agricultural Labourers
+MAIN_AL_M,Male Main Agricultural Labourers
+MAIN_AL_F,Female Main Agricultural Labourers
+MAIN_HH_P,Main Wokers in Household Industries
+MAIN_HH_M,Male Main Wokers in Household Industries
+MAIN_HH_F,Female Main Wokers in Household Industries
+MAIN_OT_P,Main Other Wokers
+MAIN_OT_M,Male Main Other Wokers
+MAIN_OT_F,Female Main Other Wokers
+MARGWORK_P,Marginal Workers
+MARGWORK_M,Male Marginal Workers
+MARGWORK_F,Female Marginal Workers
+MARG_CL_P,Marginal Cultivators
+MARG_CL_M,Male Marginal Cultivators
+MARG_CL_F,Female Marginal Cultivators
+MARG_AL_P,Marginal Agricultural Labourers
+MARG_AL_M,Male Marginal Agricultural Labourers
+MARG_AL_F,Female Marginal Agricultural Labourers
+MARG_HH_P,Marginal Wokers in Household Industries
+MARG_HH_M,Male Marginal Wokers in Household Industries
+MARG_HH_F,Female Marginal Wokers in Household Industries
+MARG_OT_P,Marginal Other Wokers
+MARG_OT_M,Male Marginal Other Wokers
+MARG_OT_F,Female Marginal Other Wokers
+MARGWORK_3_6_P,Marginal Workers- worked for 3 months or more but less than 6 months
+MARGWORK_3_6_M,Male Marginal Workers- worked for 3 months or more but less than 6 months
+MARGWORK_3_6_F,Female Marginal Workers- worked for 3 months or more but less than 6 months
+MARG_CL_3_6_P,Marginal Cultivators- worked for 3 months or more but less than 6 months
+MARG_CL_3_6_M,Male Marginal Cultivators- worked for 3 months or more but less than 6 months
+MARG_CL_3_6_F,Female Marginal Cultivators- worked for 3 months or more but less than 6 months
+MARG_AL_3_6_P,Marginal Agricultural Labourers- worked for 3 months or more but less than 6 months
+MARG_AL_3_6_M,Male Marginal Agricultural Labourers- worked for 3 months or more but less than 6 months
+MARG_AL_3_6_F,Female Marginal Agricultural Labourers- worked for 3 months or more but less than 6 months
+MARG_HH_3_6_P,Marginal Wokers in Household Industries- worked for 3 months or more but less than 6 months
+MARG_HH_3_6_M,Male Marginal Wokers in Household Industries- worked for 3 months or more but less than 6 months
+MARG_HH_3_6_F,Female Marginal Wokers in Household Industries- worked for 3 months or more but less than 6 months
+MARG_OT_3_6_P,Marginal Other Wokers- worked for 3 months or more but less than 6 months
+MARG_OT_3_6_M,Male Marginal Other Wokers- worked for 3 months or more but less than 6 months
+MARG_OT_3_6_F,Female Marginal Other Wokers- worked for 3 months or more but less than 6 months
+MARGWORK_0_3_P,Marginal Workers- worked for less than 3 months
+MARGWORK_0_3_M,Male Marginal Workers- worked for less than 3 months
+MARGWORK_0_3_F,Female Marginal Workers- worked for less than 3 months
+MARG_CL_0_3_P,Marginal Cultivators- worked for less than 3 months
+MARG_CL_0_3_M,Male Marginal Cultivators- worked for less than 3 months
+MARG_CL_0_3_F,Female Marginal Cultivators- worked for less than 3 months
+MARG_AL_0_3_P,Marginal Agricultural Labourers- worked for less than 3 months
+MARG_AL_0_3_M,Male Marginal Agricultural Labourers- worked for less than 3 months
+MARG_AL_0_3_F,Female Marginal Agricultural Labourers- worked for less than 3 months
+MARG_HH_0_3_P,Marginal Wokers in Household Industries- worked for less than 3 months
+MARG_HH_0_3_M,Male Marginal Wokers in Household Industries- worked for less than 3 months
+MARG_HH_0_3_F,Female Marginal Wokers in Household Industries- worked for less than 3 months
+MARG_OT_0_3_P,Marginal Other Wokers
+MARG_OT_0_3_M,Male Marginal Other Wokers
+MARG_OT_0_3_F,Female Marginal Other Wokers
+NON_WORK_P,Non-Workers
+NON_WORK_M,Male Non-Workers
+NON_WORK_F,Female Non-Workers

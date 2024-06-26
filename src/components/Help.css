@@ -1,0 +1,12 @@
+.help-container {
+  padding: 20px;
+}
+
+.scrollable-container {
+  height: 400px; /* Adjust the height as needed */
+  overflow-y: auto;
+}
+
+.card {
+  margin-bottom: 20px;
+}

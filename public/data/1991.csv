@@ -1,0 +1,190 @@
+Code,Attribute (field)
+TALUK,Taluk
+DISTRICT,District
+T_POPULAT,Total population
+DENSITY,Density
+HOUSEHOLDS,Number of occupied households
+PERS/HOUSE,Number of persons per occupied households
+MALE_POP,Total male population
+FEMALE_POP,Total female population
+SR_POPULAT,Sex ratio
+T_CHILDREN,Total population below 6 years
+M_CHILDREN,Total male population below 6 years
+F_CHILDREN,Total female population below 6 years
+SR_CHILDRE,Sex ratio below 6 years
+T_SC,Total Dalit (scheduled castes) population
+T%_SC,% of Dalits (scheduled castes) in the population
+M_SC,Total Dalit (scheduled castes) male population
+F_SC,Total Dalit (scheduled castes) female population
+SR_SC,Sex ratio of the Dalits (scheduled castes) 
+T_ST,Total of tribal (scheduled tribes) population
+T%_ST,% of tribals(scheduled tribes) in the population
+M_ST,Total tribal (scheduled tribes) male population
+F_ST,Total tribal (scheduled tribes) female population
+SR_ST,Sex ratio of the tribals (scheduled tribes)
+T_LITTERAT,Total literate population
+T%_LITTERA,% of Literate (population above 5)
+M_LITTERAT,Literate male population
+F_LITTERAT,Literate female population
+SR_LITTERA,Sex ratio of the literate
+T_WORKERS,Workers
+T%_WORKERS,% of total workers in the population
+M_WORKERS,Male worker population
+F_WORKERS,Female worker population
+SR_WORKERS,Workers sex ratio
+T_MARGINAL,Marginal workers
+T%_MARGINA,% of marginal workers in the population
+M_MARGINAL,Male marginal worker population
+F_MARGINAL,Female marginal worker population
+SR_MARGINA,Marginal workers' sex ratio
+T_NONWORK,Non workers
+T%_NONWORK,% of total non workers in the population
+M_NONWORK,Male non worker population
+F_NONWORK,Female non worker population
+SR_NONWORK,Non workers' sex ratio
+T_PRIMARY,Workers of the primary sector
+T%_PRIMARY,% of workers of the primary sector
+M_PRIMARY,Male workers of the primary sector
+F_PRIMARY,Female workers of the primary sector
+SR_PRIMARY,Sex ratio of workers of the primary sector
+T_SECUND,Workers of the secondary sector
+T%_SECUND,% of workers of the secondary sector
+M_SECUND,Male workers of the secondary sector
+F_SECUND,Female workers of the secondary sector
+SR_SECUND,Sex ratio of workers of the secondary sector
+T_TERTIARY,Workers of the tertiary sector
+T%_TERTIAR,% of workers of the tertiary sector
+M_TERTIARY,Male workers of the tertiary sector
+F_TERTIARY,Female workers of the tertiary sector
+SR_TERTIAR,Sex ratio of workers of the tertiary sector
+T_CULTIVAT,Cultivators
+T%_CULTIVA,% of cultivators
+M_CULTIVAT,Cultivators male
+F_CULTIVAT,Cultivators female
+SR_CULTIVA,Sex ratio of cultivators
+T_AGRI_LAB,Agricultural labourers
+T%_AGRI_LA,% of agricultural labourers
+M_AGRI_LAB,Agricultural labourers male
+F_AGRI_LAB,Agricultural labourers female
+SR_AGRI_LA,Sex ratio of agricultural labourers
+T_FISH_FOR,Other workers of the primary sector
+T%_FISH_FO,% of other workers of the primary sector
+M_FISH_FOR,Other workers of the primary sector male
+F_FISH_FOR,Other workers of the primary sector female
+SR_FISH_FO,Sex ratio of other workers of the primary sector
+T_MINING,Mining and quarrying workers
+T%_MINING,% of total Mining and quarrying workers 
+M_MINING,Male Mining and quarrying worker 
+F_MINING,Female Mining and quarrying worker 
+SR_MINING,Sex ratio of mining and quarrying workers
+T_HH_INDUS,Manufacturing/processing in household industry workers
+T%_HH_INDU,% of manufacturing /processing in household industry workers
+M_HH_INDUS,Manufacturing / processing in household industry male workers 
+F_HH_INDUS,Manufacturing /processing in household industry female workers 
+SR_HH_INDU,Sex ratio of manufacturing/processing in household industry workers
+T_OTH_INDU,Manufacturing/processing (non household industry) workers
+T%_OTH_IND,% of manufacturing/processing (non household industry) workers 
+M_OTH_INDU,Manufacturing/processing (non household industry) male workers 
+F_OTH_INDU,Manufacturing/processing (non household industry) workers
+SR_OTH_IND,Sex ratio of manufacturing/processing (non household industry)
+T_CONSTRUC,Construction workers
+T%_CONSTRU,% of construction workers 
+M_CONSTRUC,Male construction workers
+F_CONSTRUC,Female construction workers
+SR_CONSTRU,Sex ratio of construction workers
+T_TRADE,Trade and commerce workers
+T%_TRADE,% of Trade and commerce workers 
+M_TRADE,Trade and commerce male workers
+F_TRADE,Trade and commerce female workers
+SR_TRADE,Sex ratio of trade and commerce workers
+T_TRANSPOR,"Transport, storage and communication workers"
+T%_TRANSPO,"% of Transport, storage and communication workers "
+M_TRANSPOR,"Male Transport, storage and communication workers "
+F_TRANSPOR,"Female Transport, storage and communication workers "
+SR_TRANSPO,"Sex ratio of transport, storage and communication workers"
+T_SERVICES,Other services workers of the tertiary sector
+T%_SERVICE,% of other services workers of the tertiary sector
+M_SERVICES,Other services male workers of the tertiary sector
+F_SERVICES,Other services female workers of the tertiary sector
+SR_SERVICE,Sex ratio of other services workers of the tertiary sector
+EI_AVALAIB,Available or not
+EI_DISTANC,Distance to the nearest: 0: available 1:<5 km. 2:5-10 km. 3:>10 km.
+P_SCHOOL,Primary school
+M_SCHOOL,Middle school
+H_SCHOOL,High school
+PU_COLLEGE,Pu college
+GR_COLLEGE,Graduate college
+ADULT_LIT_,Adult literacy centre
+INDUS_SCH,Industrial school
+TRAIN_SCH,Training school
+OTHER_EI,Other educational institutions
+MI_AVALAIB,Available or not
+MI_DISTANC,Distance to the nearest: 0: available 1: <5 km. 2: 5-10 km. 3:>10 km.
+HOSPITAL,Hospital
+MAT&CHI_WC,Maternal and child welfare centre
+MATERNITY,Maternity homes
+CHILD_W_C,Child welfare centre
+PRIM_H_C,Primary health centre
+HEQLTH_C,Health centre
+PRIM_H_S_C,Primary health sub-centre
+DISPENSARY,Dispensary
+FP_C,Family planning centre
+TB_C,Tuberculosis clinic
+NURSING_H,Nursing home
+CHWC,Community health workers centre
+PRIV_PRACT,Registered private practitioner
+SUBS_PRACT,Subsidiary medical practitioner
+OTHER_MI,Other medical centres
+PT_AVALAIB,Available or not
+PR_DISTANC,Distance to the nearest: 0: available 1:<5 km. 2:5-10 km. 3:>10 km.
+POST_OFFIC,Post office
+TELEG_OFFI,Telegraph office
+PT_OFFICE,Post and telegraph office
+PHONE_CONN,Telephone connection
+DW_AVALAIB,Available or not
+DW_DISTANC,Distance to the nearest: 0: available 1:<5 km. 2: 5-10 km. 3: >10 km.
+DW_TAP,Tap water
+DW_WELL,Well water
+DW_TUBEWEL,Tube well water
+DW_HANDPUM,Hand pump water
+DW_RIVER,River water
+DW_FOUNTAI,Fountain
+DW_SPRING,Spring
+DW_CANAL,Canal
+DW_TANK,Tank and lake water
+DW_OTHER,Other Drinking water sources
+MK_AVALAIB,Available or not
+MK_DISTANC,Distance to the nearest: 0:available 1: <5 km. 2: 5-10 km. 3: >10 km.
+DAILY_MK,Daily market
+CF_AVALAIB,Available or not
+CF_DISTANC,Distance to the nearest: 0: available 1: <5 km. 2: 5-10 km. 3: >10 km.
+BUS_STOP,Bus stop
+RAILWAY,Railway station
+PUCCA_ROAD,Approach pucca road
+KACHCHA_RO,Approach kachcha road
+FOOTPATH,Approach footpath
+NEAR_TOWN,Nearest town
+DIST_TOWN,Distance to town 0 km. 1: <5 km. 2: 5-10 km. 3: >10 km.
+PW_AVALAIB,Available or not
+PW_DOMESTI,Power for domestic purpose
+PW_AGRICUL,Power for agriculture
+PW_IND_COM,Power for industrial or/and commercial purpose
+PW_FOR_ALL,Power for all purpose
+LU_FOREST,Forest
+LU%_FOREST,Forest as % of total area
+LU_IRRIGAT,Total irrigated area
+LU%_IRRIGA,Irrigated area as % of total cultivated area
+LU_UNIRRIG,Unirrigated area
+LU%_UNIRRI,Unirrigated area as % of total cultivated area
+LU_CULT_WA,Culturable waste
+LU%_CULT_W,Culturable waste as % of total area
+LU_NON_CUL,Not available for cultivation
+LU%_NON_C,Not available for cultivation as % of total area
+IR_WELL,Surface irrigated by well
+IR_TUBEWEL,Surface irrigated by tubewell
+IR_TANK,Surface irrigated by tank
+IR_LAKE,Surface irrigated by lake
+IR_RIVER,Surface irrigated by river
+IR_GVT_CAN,Surface irrigated by government canal
+IR_PRIV_CA,Surface irrigated by private canal
+IR_OTHER,Surface irrigated by other sources

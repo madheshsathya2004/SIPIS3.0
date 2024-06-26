@@ -1,0 +1,282 @@
+{
+  "Thiruvallur": {
+    "Gummidipoondi": [],
+    "Ponneri": [],
+    "Uthukkottai": [],
+    "Tiruttani": [],
+    "Pallipattu": [],
+    "Thiruvallur": [],
+    "Poonamallee": [],
+    "Ambattur": [],
+    "Mathavaram": []
+  },
+  "Chennai": {
+    "Chennai": []
+  },
+  "Kancheepuram": {
+    "Sriperumbudur": [],
+    "Tambaram": [],
+    "Alandur": [],
+    "Sholinganallur": [],
+    "Chengalpattu": [],
+    "Kancheepuram": [],
+    "Uthiramerur": [],
+    "Tirukalukundram": [],
+    "Maduranthakam": [],
+    "Cheyyur": []
+  },
+  "Vellore": {
+    "Gudiyatham": [],
+    "Katpadi": [],
+    "Wallajah": [],
+    "Arakonam": [],
+    "Arcot": [],
+    "Vellore": [],
+    "Vaniyambadi": [],
+    "Ambur": [],
+    "Tirupathur": []
+  },
+  "Tiruvannamalai": {
+    "Arani": [],
+    "Cheyyar": [],
+    "Vandavasi": [],
+    "Polur": [],
+    "Chengam": [],
+    "Thandrampet": [],
+    "Tiruvannamalai": []
+  },
+  "Viluppuram": {
+    "Gingee": [],
+    "Tindivanam": [],
+    "Vanur": [],
+    "Viluppuram": [],
+    "Tirukkoyilur": [],
+    "Sankarapuram": [],
+    "Kallakkurichi": [],
+    "Ulundurpettai": []
+  },
+  "Salem": {
+    "Mettur": [],
+    "Omalur": [],
+    "Edappadi": [],
+    "Sankari": [],
+    "Salem": [],
+    "Yercaud": [],
+    "Vazhapadi": [],
+    "Attur": [],
+    "Gangavalli": []
+  },
+  "Namakkal": {
+    "Tiruchengode": [],
+    "Rasipuram": [],
+    "Namakkal": [],
+    "Paramathi Velur": []
+  },
+  "Erode": {
+    "Sathyamangalam": [],
+    "Bhavani": [],
+    "Gobichettipalayam": [],
+    "Perundurai": [],
+    "Erode": []
+  },
+  "The Nilgiris": {
+    "Panthalur": [],
+    "Gudalur": [],
+    "Udhagamandalam": [],
+    "Kotagiri": [],
+    "Coonoor": [],
+    "Kundah": []
+  },
+  "Dindigul": {
+    "Palani": [],
+    "Oddanchatram": [],
+    "Vedasandur": [],
+    "Natham": [],
+    "Dindigul": [],
+    "Attur": [],
+    "Kodaikanal": [],
+    "Nilakkottai": []
+  },
+  "Karur": {
+    "Aravakurichi": [],
+    "Karur": [],
+    "Krishnarayapuram": [],
+    "Kulithalai": [],
+    "Kadavur": []
+  },
+  "Tiruchirappalli": {
+    "Thottiyam": [],
+    "Musiri": [],
+    "Thuraiyur": [],
+    "Manachanallur": [],
+    "Lalgudi": [],
+    "Srirangam": [],
+    "Tiruchirappalli": [],
+    "Thiruverumbur": [],
+    "Manapparai": []
+  },
+  "Perambalur": {
+    "Veppanthattai": [],
+    "Perambalur": [],
+    "Kunnam": []
+  },
+  "Ariyalur": {
+    "Sendurai": [],
+    "Udayarpalayam": [],
+    "Ariyalur": []
+  },
+  "Cuddalore": {
+    "Panruti": [],
+    "Cuddalore": [],
+    "Kurinjipadi": [],
+    "Chidambaram": [],
+    "Kattumannarkoil": [],
+    "Virudhachalam": [],
+    "Tittakudi": []
+  },
+  "Nagapattinam": {
+    "Sirkali": [],
+    "Mayiladuthurai": [],
+    "Kuthalam": [],
+    "Tharangambadi": [],
+    "Nagapattinam": [],
+    "Kilvelur": [],
+    "Thirukkuvalai": [],
+    "Vedaranyam": []
+  },
+  "Thiruvarur": {
+    "Valangaiman": [],
+    "Kodavasal": [],
+    "Nannilam": [],
+    "Thiruvarur": [],
+    "Needamangalam": [],
+    "Mannargudi": [],
+    "Thiruthuraipoondi": []
+  },
+  "Thanjavur": {
+    "Thiruvidaimarudur": [],
+    "Kumbakonam": [],
+    "Papanasam": [],
+    "Thiruvaiyaru": [],
+    "Thanjavur": [],
+    "Orathanadu": [],
+    "Pattukkottai": [],
+    "Peravurani": []
+  },
+  "Pudukkottai": {
+    "Iluppur": [],
+    "Kulathur": [],
+    "Gandarvakkottai": [],
+    "Pudukkottai": [],
+    "Thirumayam": [],
+    "Ponnamaravathi": [],
+    "Alangudi": [],
+    "Karambakudi": [],
+    "Aranthangi": [],
+    "Manamelkudi": [],
+    "Avudayarkoil": []
+  },
+  "Sivaganga": {
+    "Tirupathur": [],
+    "Karaikkudi": [],
+    "Devakottai": [],
+    "Sivaganga": [],
+    "Manamadurai": [],
+    "Ilayangudi": []
+  },
+  "Madurai": {
+    "Melur": [],
+    "Madurai North": [],
+    "Vadipatti": [],
+    "Usilampatti": [],
+    "Peraiyur": [],
+    "Thirumangalam": [],
+    "Madurai South": []
+  },
+  "Theni": {
+    "Bodinayakanur": [],
+    "Periyakulam": [],
+    "Theni": [],
+    "Uthamapalayam": [],
+    "Andipatti": []
+  },
+  "Virudhunagar": {
+    "Rajapalayam": [],
+    "Srivilliputhur": [],
+    "Sivakasi": [],
+    "Virudhunagar": [],
+    "Kariapatti": [],
+    "Tiruchuli": [],
+    "Aruppukkottai": [],
+    "Sattur": []
+  },
+  "Ramanathapuram": {
+    "Tiruvadanai": [],
+    "Paramakudi": [],
+    "Mudukulathur": [],
+    "Kamuthi": [],
+    "Kadaladi": [],
+    "Ramanathapuram": [],
+    "Rameswaram": []
+  },
+  "Thoothukkudi": {
+    "Kovilpatti": [],
+    "Ettayapuram": [],
+    "Vilathikulam": [],
+    "Ottapidaram": [],
+    "Thoothukkudi": [],
+    "Srivaikuntam": [],
+    "Tiruchendur": [],
+    "Sathankulam": []
+  },
+  "Tirunelveli": {
+    "Sivagiri": [],
+    "Sankarankoil": [],
+    "Veerakeralamputhur": [],
+    "Tenkasi": [],
+    "Shenkottai": [],
+    "Alangulam": [],
+    "Tirunelveli": [],
+    "Palayamkottai": [],
+    "Ambasamudram": [],
+    "Nanguneri": [],
+    "Radhapuram": []
+  },
+  "Kanniyakumari": {
+    "Vilavancode": [],
+    "Kalkulam": [],
+    "Thovala": [],
+    "Agastheeswaram": []
+  },
+  "Dharmapuri": {
+    "Palakkodu": [],
+    "Harur": [],
+    "Pappireddipatti": [],
+    "Dharmapuri": [],
+    "Pennagaram": []
+  },
+  "Krishnagiri": {
+    "Hosur": [],
+    "Krishnagiri": [],
+    "Denkanikottai": [],
+    "Pochampalli": [],
+    "Uthangarai": []
+  },
+  "Coimbatore": {
+    "Mettupalayam": [],
+    "Sulur": [],
+    "Coimbatore North": [],
+    "Coimbatore South": [],
+    "Pollachi": [],
+    "Valparai": []
+  },
+  "Tiruppur": {
+    "Kangeyam": [],
+    "Dharapuram": [],
+    "Avanashi": [],
+    "Tiruppur": [],
+    "Palladam": [],
+    "Udumalaipettai": [],
+    "Madathukulam": []
+  }
+}
